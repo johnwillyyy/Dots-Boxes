@@ -43,11 +43,11 @@ void create_grid(int  rows,int cols,char A[rows][cols]){
 void move(int rows,int cols, char A[rows][cols],int r1,int r2,int c1,int c2){
     if(r1==r2){
         int c = c1<c2 ? c1:c2;
-        A[2*r1][4*c+1]=A[2*r1][4*c+2]=A[2*r1][4*c+3]=205;
+        A[rows_c*r1][cols_c*c+1]=A[rows_c*r1][cols_c*c+2]=A[rows_c*r1][cols_c*c+3]=205;
         }
     else if(c1==c2){
         int r = r1<r2?r1:r2;
-        A[2*r1+1][4*c1]=186;
+        A[rows_c*r1+1][cols_c*c1]=186;
         }
 }
 
