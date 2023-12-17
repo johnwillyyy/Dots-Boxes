@@ -90,16 +90,6 @@ void print(int rows,int cols,char A[rows][cols],int R[rows][cols],int B[rows][co
     printf("\n");
 }
 
-/*void print(char *arr, int m, int n)
-{
-    int i, j;
-    for (i = 0; i < m; i++){
-        printf("\n");
-      for (j = 0; j < n; j++)
-        printf("%c", *((arr+i*n) + j));
-    }
-    printf("\n");
-}*/
 
 int main() {
     int n,m;
@@ -115,7 +105,6 @@ int main() {
             R[i][j]=B[i][j]=0;
     create_grid(rows,cols,A);
     print(rows,cols,A,R,B);
-    /*print((char *)A, rows, cols);*/
 
     int r1,r2,c1,c2;
     for(int k=0;k<(rows+1)*cols+(cols+1)*rows;k++){
@@ -131,7 +120,6 @@ int main() {
                 k--;
             system("cls");
             print(rows,cols,A,R,B);
-            /*print((char *)A, rows, cols);*/
         }
         else{
             int check=move(rows,cols,A,r1,r2,c1,c2,B);
@@ -139,7 +127,6 @@ int main() {
                 k--;
             system("cls");
             print(rows,cols,A,R,B);
-            /*print((char *)A, rows, cols);*/
         }
     }
     if(R[0][0]>B[0][0])
@@ -148,6 +135,4 @@ int main() {
         printf(BLU"BLUE WINS"RESET);
     else
         printf("DRAW");
-    /*system("cls");*/
-    /*print((char *)A, rows, cols);*/
 }
