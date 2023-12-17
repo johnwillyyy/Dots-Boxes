@@ -14,17 +14,17 @@
 void check_box(int rows,int cols, char A[rows][cols],int r1,int r2,int c1,int c2){
     if(r1==r2){
         int c = c1<c2 ? c1:c2;
-        if(A[rows_c*r1-1][cols_c*c1]!=' '&&A[rows_c*r1-1][cols_c*c2]!=' '&&A[rows_c*r1-rows_c][cols_c*c+1]!=' ')
-            A[rows_c*r1-1][cols_c*c+1]=A[rows_c*r1-1][cols_c*c+2]=A[rows_c*r1-1][cols_c*c+3]=178;
-        if(A[rows_c*r1+1][cols_c*c1]!=' '&&A[rows_c*r1+1][cols_c*c2]!=' '&&A[rows_c*r1+rows_c][cols_c*c+1]!=' ')
-            A[rows_c*r1+1][cols_c*c+1]=A[rows_c*r1+1][cols_c*c+2]=A[rows_c*r1+1][cols_c*c+3]=178;
+        if(A[r1-1][c1]!=' '&&A[r1-1][c2]!=' '&&A[r1-rows_c][c+1]!=' ')
+            A[r1-1][c+1]=A[r1-1][c+2]=A[r1-1][c+3]=178;
+        if(A[r1+1][c1]!=' '&&A[r1+1][c2]!=' '&&A[r1+rows_c][c+1]!=' ')
+            A[r1+1][c+1]=A[r1+1][c+2]=A[r1+1][c+3]=178;
     }
     else if(c1==c2){
         int r = r1<r2 ? r1:r2;
-        if(A[rows_c*r1][cols_c*c1-1]!=' '&&A[rows_c*r2][cols_c*c1-1]!=' '&&A[rows_c*r+1][cols_c*c1-cols_c]!=' ')
-            A[rows_c*r+1][cols_c*c1-1]=A[rows_c*r+1][cols_c*c1-2]=A[rows_c*r+1][cols_c*c1-3]=178;
-        if(A[rows_c*r1][cols_c*c1+1]!=' '&&A[rows_c*r2][cols_c*c1+1]!=' '&&A[rows_c*r+1][cols_c*c1+cols_c]!=' ')
-            A[rows_c*r+1][cols_c*c1+1]=A[rows_c*r+1][cols_c*c1+2]=A[rows_c*r+1][cols_c*c1+3]=178;
+        if(A[r1][c1-1]!=' '&&A[r2][c1-1]!=' '&&A[r+1][c1-cols_c]!=' ')
+            A[r+1][c1-1]=A[r+1][c1-2]=A[r+1][c1-3]=178;
+        if(A[r1][c1+1]!=' '&&A[r2][c1+1]!=' '&&A[r+1][c1+cols_c]!=' ')
+            A[r+1][c1+1]=A[r+1][c1+2]=A[r+1][c1+3]=178;
     }
 }
 
@@ -45,11 +45,11 @@ void create_grid(int  rows,int cols,char A[rows][cols]){
 void move(int rows,int cols, char A[rows][cols],int r1,int r2,int c1,int c2){
     if(r1==r2){
         int c = c1<c2 ? c1:c2;
-        A[rows_c*r1][cols_c*c+1]=A[rows_c*r1][cols_c*c+2]=A[rows_c*r1][cols_c*c+3]=205;
+        A[r1][c+1]=A[r1][c+2]=A[r1][c+3]=205;
         }
     else if(c1==c2){
         int r = r1<r2?r1:r2;
-        A[rows_c*r1+1][cols_c*c1]=186;
+        A[r1+1][c1]=186;
         }
     check_box(rows,cols,A,r1,r2,c1,c2);
 }
@@ -79,6 +79,10 @@ int main() {
     int r1,r2,c1,c2;
     for(int k=0;k<4;k++){
     scanf("%d %d %d %d",&r1,&r2,&c1,&c2);
+    r1=rows_c*r1;
+    r2=rows_c*r2;
+    c1=cols_c*c1;
+    c2=cols_c*c2;
     move(rows,cols,A,r1,r2,c1,c2);
     system("cls");
     print((char *)A, rows, cols);
