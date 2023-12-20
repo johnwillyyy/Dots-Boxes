@@ -78,7 +78,7 @@ void print(int rows,int cols,char A[rows][cols],int R[rows][cols],int B[rows][co
     for (int i=0;i<rows;i++){
         printf("\n");
         for (int j=0;j<cols;j++){
-            if(j%cols_c==0||j==0){
+            if(j%cols_c==0){
                 if(R[i][j]==1)
                         printf(RED"%c"RESET,A[i][j]);
                 else if(B[i][j]==1)
@@ -87,14 +87,12 @@ void print(int rows,int cols,char A[rows][cols],int R[rows][cols],int B[rows][co
                     printf("%c",A[i][j]);
             }
             else{
-                for(int k=0;k<3;k++){
                     if(R[i][j]==1)
-                        printf(RED"%c"RESET,A[i][j]);
+                        printf(RED"%c%c%c"RESET,A[i][j],A[i][j],A[i][j]);
                     else if(B[i][j]==1)
-                        printf(BLU"%c"RESET,A[i][j]);
+                        printf(BLU"%c%c%c"RESET,A[i][j],A[i][j],A[i][j]);
                     else
-                        printf("%c",A[i][j]);
-                }
+                        printf("%c%c%c",A[i][j],A[i][j],A[i][j]);
             }
         }
     }
