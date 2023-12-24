@@ -4,7 +4,7 @@
 #include "Game Logic.h"
 
 int n=1,m=1;
-int mode=1;
+int mode;
 int *pn=&n , *pm=&m , *pmode=&mode;
 double match_begun;
 double player_begun;
@@ -13,8 +13,7 @@ int score1,score2;
 
 int main() {
     system("cls");
-    //main_menu(*pn,*pm,&p1,&p2);
-    scanf("%d*%d",&n,&m);
+    main_menu(pn,pm,pmode,&p1,&p2);
     int boxes = n*m;
     int rows = rows_c*n+rows_c+1;
     int cols = cols_c*m+cols_c+1;

@@ -33,7 +33,7 @@ int input;
 scanf("%d",&input);
     if (input == 1){*pn=2;*pm=2;}
     else if (input == 2){ *pn=5;*pm=5;}
-    else if (input == 3){ printf("custom");}
+    else if (input == 3){ printf("Enter your grid n*n: ");scanf("%d*%d",pn,pm);}
     else {printf("Please enter a valid choice\n");
     sleep(1);
     system("cls");
@@ -41,7 +41,7 @@ scanf("%d",&input);
     }
 
 
-void mode_menu(int *pn,int *pm,player *p1,player *p2){
+void mode_menu(int *pn,int *pm,int *pmode,player *p1,player *p2){
     system("cls");
     printf("Select Game Mode\n");
     printf( RED"1- Human vs. Human\n\n"RESET);
@@ -49,17 +49,19 @@ void mode_menu(int *pn,int *pm,player *p1,player *p2){
     int input;
     scanf("%d",&input);
     if (input == 1){
-        printf("Enter Player 1 name: ");  scanf("%s",p1->name);printf("\n");
+        *pmode = 0;
+        printf("Enter Player 1 name: ");scanf("%s",p1->name);printf("\n");
         printf("Enter Player 2 name: ");scanf("%s",p2->name);printf("\n");
         grid_menu(pn,pm);}
     else if (input == 2){
+        *pmode = 1;
        printf("Enter Player name: ");scanf("%s",p1->name);
        strcpy(p2->name, "computer");
        grid_menu(pn,pm);}
     else {printf("Please enter a valid choice\n");
     sleep(1);
     system("cls");
-    mode_menu(pn,pm,p1,p2);}
+    mode_menu(pn,pm,pmode,p1,p2);}
     }
 
 
@@ -67,7 +69,7 @@ void mode_menu(int *pn,int *pm,player *p1,player *p2){
 
 
 
-void main_menu(int *pn,int *pm, player *p1, player *p2){
+void main_menu(int *pn,int *pm, int *pmode, player *p1, player *p2){
 
 printf( RED"1- New Game\n\n"RESET);
 printf( BLU"2- Load Game\n\n"RESET);
@@ -77,7 +79,7 @@ printf( "Select A Number: ");
 int input;
 scanf("%d",&input);
     if(input == 1){
-        mode_menu(pn,pm,p1,p2);
+        mode_menu(pn,pm,pmode,p1,p2);
 }
     else if (input == 2){ printf("Choice 2");}
     else if (input == 3){ printf("Choice 3");}
@@ -85,7 +87,7 @@ scanf("%d",&input);
     else    {printf("Please enter a valid choice\n");
     sleep(1);
     system("cls");
-    main_menu(pn,pm,p1,p2);}
+    main_menu(pn,pm,pmode,p1,p2);}
 }
 
 
