@@ -102,10 +102,10 @@ int store_move(int r1,int r2,int c1,int c2,int *store,player *p1,player *p2){
     return bank;
 }
 
-void printArray(int * arr, int size) {
+/*void printArray(int * arr, int size) {
   for (int i = 0; i < size; i++)
     printf("% d -", arr[i]);
-}
+}*/
 
 void undo(char A[rows][cols],int F[rows][cols],int *store,player *p1,player *p2){
 
