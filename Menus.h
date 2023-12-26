@@ -14,7 +14,7 @@
 #define cols_c 2
 
 typedef struct{
-char *name[30];
+char name[30];
 int score;
 int moves;
 }player;
@@ -56,7 +56,7 @@ void mode_menu(int *pn,int *pm,int *pmode,player *p1,player *p2){
     else if (input == 2){
         *pmode = 1;
        printf("Enter Player name: ");scanf("%s",p1->name);
-       strcpy(p2->name, "computer");
+       strcpy(p2->name, "Mina&John");
        grid_menu(pn,pm);}
     else {printf("Please enter a valid choice\n");
     sleep(1);
