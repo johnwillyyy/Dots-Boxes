@@ -7,12 +7,19 @@ else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,store,redo, p1,p2);
 
 
 
-
-
 int human_move(char A[rows][cols],int F[rows][cols],int *undo,int *redo, player *p1,player*p2){
-        int r1,r2,c1,c2,c,r,valid;
+ int r1,r2,c1,c2;
+ scanf("%d %d %d %d",&r1,&r2,&c1,&c2);
+ move(r1,r2,c1,c2,A,F,undo,redo,p1,p2);
+}
+
+
+
+
+
+int move(int r1,int r2,int c1, int c2,char A[rows][cols],int F[rows][cols],int *undo,int *redo, player *p1,player*p2){
+       int c,r,valid;
         char place;
-        scanf("%d %d %d %d",&r1,&r2,&c1,&c2);
         if(r1 <= rows && r2 <= rows && c1 <= cols && c2 <= cols){
             if (r1==r2 && c1==c2) {check_special_entries(r1,r2,c1,c2,A,F,p1,p2,undo,redo);return flag;}
 

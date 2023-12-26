@@ -8,7 +8,7 @@ int j =0;
 int r1,r2,c1,c2;
 int movecount =0;
 #include "Menus.h"
-#include "Box_Check.h"
+#include "Box check.c"
 #include "printing.h"
 #include "time_handling.h"
 #include "Game Logic.h"
