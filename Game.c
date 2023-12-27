@@ -7,7 +7,10 @@ int prevflag=0;
 int j =0;
 int r1,r2,c1,c2;
 int movecount =0;
-
+int timeIsUp = 0;
+double match_begun;
+double player_begun;
+int exitFlag = 0;
 #define MAX_PLAYERS 10
 #define max_name_length 50
 
@@ -21,8 +24,7 @@ int movecount =0;
 int n=1,m=1;
 int mode;
 int *pn=&n , *pm=&m , *pmode=&mode;
-double match_begun;
-double player_begun;
+
 int score1,score2;
 
 int main() {

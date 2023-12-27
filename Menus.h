@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <pthread.h>
+
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
 #define YEL   "\x1B[33m"
@@ -12,6 +14,20 @@
 
 #define rows_c 2
 #define cols_c 2
+void *timerThread(void *arg) {
+    int *exitFlag = (int *)arg;
+    //printf("I ENTERED THREAD");
+    while (!*exitFlag) {
+            printf("%d",current_time(player_begun));
+        if(current_time(player_begun)>=10){printf("\nYou passed one minute");return NULL;}
+        sleep(1); // Check for exit every second
+    }
+
+    //printf("Timer thread is exiting\n");
+    return NULL;
+}
+
+
 
 typedef struct{
 char name[30];

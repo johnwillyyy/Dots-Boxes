@@ -8,9 +8,23 @@ else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,store,redo, p1,p2);
 
 
 int human_move(char A[rows][cols],int F[rows][cols],int *undo,int *redo, player *p1,player*p2){
+
+
+player_begun = clock();
+    printf("%f\n",player_begun);
+pthread_t timer;
  int r1,r2,c1,c2;
+        pthread_create(&timer, NULL, timerThread, &exitFlag);
  scanf("%d %d %d %d",&r1,&r2,&c1,&c2);
+        exitFlag = 1;
+
+         printf("%d\n",current_time(player_begun));sleep(1);
+
+pthread_cancel(timer);
+     exitFlag = 0;
+
  move(r1,r2,c1,c2,A,F,undo,redo,p1,p2);
+
 }
 
 
