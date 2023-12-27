@@ -7,11 +7,16 @@ int prevflag=0;
 int j =0;
 int r1,r2,c1,c2;
 int movecount =0;
+
+#define MAX_PLAYERS 10
+#define max_name_length 50
+
 #include "Menus.h"
-#include "Box check.c"
+#include "Box_Check.h"
 #include "printing.h"
 #include "time_handling.h"
 #include "Game Logic.h"
+#include "Top 10 Players.h"
 
 int n=1,m=1;
 int mode;
@@ -21,6 +26,7 @@ double player_begun;
 int score1,score2;
 
 int main() {
+    player topPlayers[MAX_PLAYERS];
     prevflag = flag;
     system("cls");
     main_menu(pn,pm,pmode,&p1,&p2);
@@ -63,10 +69,23 @@ flag = computer_move(A,flagARR,&p1,&p2);
     }
 
     if(p1.score>p2.score)
-        printf(RED"%s WINS"RESET,p1.name);
+{
+        printf(RED"\t\t\t\t\t%s WINS!!\n"RESET,p1.name);
+    winnerName = p1.name;
+    winnerScore = p1.score;}
     else if(p1.score<p2.score)
-        printf(BLU"%s WINS"RESET,p2.name);
+       {printf(BLU"\t\t\t\t\t\t%s WINS!!\n"RESET,p2.name);
+            winnerName = p2.name;
+            winnerScore = p2.score;}
     else
-        printf("DRAW");
+        printf("\t\t\t\t\t\t\tDRAW!!\n");
+
+        printf(GRN"TOP 10 PLAYERS\n"RESET);
+    readTopScores(topPlayers);
+    updateTopScores(topPlayers, winnerName, winnerScore);
+    writeTopScores(topPlayers);
+display();
+
+
 }
 
