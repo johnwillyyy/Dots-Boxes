@@ -18,6 +18,112 @@ int movecount =0;
 #include "Game Logic.h"
 #include "Top 10 Players.h"
 
+int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c2,player *p1,player *p2,int right,int left,int up,int down){
+    int x=0;
+    if(r1==r2){
+        int c = c1<c2 ? c1:c2;
+        if(up==0&&down==1){
+            if(A[r1+1][c1]==-70 && A[r1+1][c2]==-70 && A[r1+rows_c][c+1]!=-51){
+               x=check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,right,left,up,down);
+               if(x){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r1][c+1]=-51;
+                    F[r1][c+1]=flag;
+                    A[r1+1][c+1]=178;
+                    F[r1+1][c+1]=flag;
+                    return 1;
+                }
+            }
+            else if(A[r1+1][c1]==-70 && A[r1+1][c2]==-70 && A[r1+rows_c][c+1]==-51){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r1][c+1]=-51;
+                    F[r1][c+1]=flag;
+                    A[r1+1][c+1]=178;
+                    F[r1+1][c+1]=flag;
+                return 1;
+            }
+        }
+        else if(up==1&&down==0){
+            if(A[r1-1][c1]==-70 && A[r1-1][c2]==-70 && A[r1-rows_c][c+1]!=-51){
+               x=check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,right,left,up,down);
+               if(x){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r1][c+1]=-51;
+                    F[r1][c+1]=flag;
+                    A[r1-1][c+1]=178;
+                    F[r1-1][c+1]=flag;
+                    return 1;
+                }
+            }
+            else if(A[r1-1][c1]==-70 && A[r1-1][c2]==-70 && A[r1-rows_c][c+1]==-51){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r1][c+1]=-51;
+                    F[r1][c+1]=flag;
+                    A[r1-1][c+1]=178;
+                    F[r1-1][c+1]=flag;
+                return 1;
+            }
+        }
+    }
+    if(c1==c2){
+        int r = r1<r2 ? r1:r2;
+        if(left==0&&right==1){
+            if(A[r][c1+1]==-51 && A[r+rows_c][c1+1]==-51 && A[r+1][c1+cols_c]!=-70){
+               x=check_chain(A,F,r1,r2,c1+cols_c,c2+rows_c,p1,p2,right,left,up,down);
+               if(x){
+                   printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                  A[r+1][c1]=-70;
+                  F[r+1][c1]=flag;
+                  A[r+1][c1+1]=178;
+                  F[r+1][c1+1]=flag;
+                  return 1;
+                  }
+            }
+            else if(A[r][c1+1]==-51 && A[r+rows_c][c1+1]==-51 && A[r+1][c1+cols_c]==-70){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r+1][c1]=-70;
+                    F[r+1][c1]=flag;
+                    A[r+1][c1+1]=178;
+                    F[r+1][c1+1]=flag;
+                return 1;
+            }
+            else if(A[r][c1+1]==-51 && A[r+rows_c][c1+1]!=-51 && A[r+1][c1+cols_c]==-70){
+                x=check_chain(A,F,r+rows_c,r+rows_c,c1,c2+rows_c,p1,p2,0,0,0,1);
+                if(x){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r+1][c1]=-70;
+                    F[r+1][c1]=flag;
+                    A[r+1][c1+1]=178;
+                    F[r+1][c1+1]=flag;
+                    return 1;
+                }
+            }
+        }
+        else if(left==1&&right==0){
+            if(A[r][c1-1]==-51 && A[r+rows_c][c1-1]==-51 && A[r+1][c1-cols_c]!=-70){
+                x=check_chain(A,F,r1,r2,c1-cols_c,c2-rows_c,p1,p2,right,left,up,down);
+                if(x){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r+1][c1]=-70;
+                    F[r+1][c1]=flag;
+                    A[r+1][c1-1]=178;
+                    F[r+1][c1-1]=flag;
+                    return 1;
+                }
+            }
+            else if(A[r][c1-1]==-51 && A[r+rows_c][c1-1]==-51 && A[r+1][c1-cols_c]==-70){
+                    printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(3);
+                    A[r+1][c1]=-70;
+                    F[r+1][c1]=flag;
+                    A[r+1][c1-1]=178;
+                    F[r+1][c1-1]=flag;
+                    return 1;
+            }    
+        }
+    }
+    return 0;
+}
+
 int n=1,m=1;
 int mode;
 int *pn=&n , *pm=&m , *pmode=&mode;
