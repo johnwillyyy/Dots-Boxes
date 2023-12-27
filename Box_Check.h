@@ -9,14 +9,14 @@ int check_box(char A[rows][cols],int r1,int r2,int c1,int c2,int F[rows][cols],i
                     A[r1-1][c+1]=178;
                     F[r1-1][c+1]=flag;
                     check++;
-                    up=1;}
+                    down=1;}
 
         }
         if(A[r1+1][c1]==-70&&A[r1+1][c2]==-70&&A[r1+rows_c][c+1]==-51){
             A[r1+1][c+1]=178;
             F[r1+1][c+1]=flag;
             check++;
-            down=1;
+            up=1;
         }
     }
     else if(c1==c2){
