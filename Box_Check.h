@@ -1,4 +1,4 @@
-int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c2,player *p1,player *p2,int right,int left,int up,int down);
+int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c2,player *p1,player *p2,int right,int left,int up,int down,int check);
 int check_box(char A[rows][cols],int r1,int r2,int c1,int c2,int F[rows][cols],int flag,player *p1,player *p2){
     int check=0,checkinv =0,right=0,left=0,up=0,down=0;
     if(r1==r2){
@@ -37,8 +37,8 @@ int check_box(char A[rows][cols],int r1,int r2,int c1,int c2,int F[rows][cols],i
     movecount++;
 
     if (check>0) {
-            if (flag ==0) {p1->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down); return flag;}
-            else if (flag ==1) {p2->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down); return flag;}
+            if (flag ==0) {p1->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0); return flag;}
+            else if (flag ==1) {p2->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0); return flag;}
     }
     else {movecount = 0;
             return flag^=1;
