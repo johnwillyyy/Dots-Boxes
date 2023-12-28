@@ -12,16 +12,17 @@ int human_move(char A[rows][cols],int F[rows][cols],int *undo,int *redo, player 
 
 player_begun = clock();
     printf("%f\n",player_begun);
-pthread_t timer;
+//pthread_t timer;
  int r1,r2,c1,c2;
-        pthread_create(&timer, NULL, timerThread, &exitFlag);
+//pthread_create(&timer, NULL, timerThread, &exitFlag);
  scanf("%d %d %d %d",&r1,&r2,&c1,&c2);
-        exitFlag = 1;
+//exitFlag = 1;
 
-         printf("%d\n",current_time(player_begun));sleep(1);
+         printf("%d\n",current_time(player_begun));
+         sleep(1);
 
-pthread_cancel(timer);
-     exitFlag = 0;
+//pthread_cancel(timer);
+     //exitFlag = 0;
 
  move(r1,r2,c1,c2,A,F,undo,redo,p1,p2);
 
