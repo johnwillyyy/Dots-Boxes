@@ -80,3 +80,16 @@ void check_box_inv(char A[rows][cols],int r1,int r2,int c1,int c2,int F[rows][co
             else if (flag ==1) {p2->score-=check;}
     }
 }
+
+
+
+void dfsmove(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1,int c2,int right, int left, int up , int down,player *p1,player *p2/*,int *undo*/){
+
+
+
+
+
+            if (flag ==0) {p1->score++; p1->moves++;}
+            else if (flag ==1) {p2->score++; p2->moves++;}
+            //store_move(r1,r2,c1,c2,undo,p1,p2);
+}

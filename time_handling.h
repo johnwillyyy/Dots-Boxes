@@ -4,7 +4,8 @@ void current_time(double begin){
     time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
     double minutes = (int)(time_spent / 60) %60;
     time_spent = (int)time_spent%60;
-    printf("%0.0f:0%0.0f",minutes,time_spent);
+   // printf("%0.0f:0%0.0f",minutes,time_spent);
+   return time_spent;
 }
 
 

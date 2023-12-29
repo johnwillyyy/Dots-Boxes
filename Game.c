@@ -7,6 +7,12 @@ int prevflag=0;
 int j =0;
 int r1,r2,c1,c2;
 int movecount =0;
+double match_begun;
+double player_begun;
+int n=1,m=1;
+int mode;
+int *pn=&n , *pm=&m , *pmode=&mode;
+
 
 #define MAX_PLAYERS 10
 #define max_name_length 50
@@ -97,7 +103,7 @@ int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c
                 }
             }
             else if(A[r1-1][c1]==-70 && A[r1-1][c2]==-70 && A[r1-rows_c][c+1]==-51){      //check the end of going up
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/ 
+                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
                     if(!check){    //make a box up
                     A[r1][c+1]=-51;
                     F[r1][c+1]=flag;
@@ -225,18 +231,12 @@ int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c
                     F[r+1][c1-1]=flag;}
                     return 1;
                 }
-            }  
+            }
         }
     }
     return 0;
 }
 
-int n=1,m=1;
-int mode;
-int *pn=&n , *pm=&m , *pmode=&mode;
-double match_begun;
-double player_begun;
-int score1,score2;
 
 int main() {
     player topPlayers[MAX_PLAYERS];
@@ -297,7 +297,7 @@ flag = computer_move(A,flagARR,&p1,&p2);
     readTopScores(topPlayers);
     updateTopScores(topPlayers, winnerName, winnerScore);
     writeTopScores(topPlayers);
-display();
+    //display();
 
 
 }
