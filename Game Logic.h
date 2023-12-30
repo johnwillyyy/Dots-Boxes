@@ -126,8 +126,8 @@ void Undo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,
         if((movecount == 0 && redo[0] != 0) || movecount <0 || temp2 == 0){
           //  movecount++;
                 printf("\nYOUCANTUNDO\nEnter move: ");
-                human_move(A,F,undo,redo,p1,p2);
-                flag^=1;
+                flag = human_move(A,F,undo,redo,p1,p2);
+             //   flag = check_box(A,r1,r2,c1,c2,F,flag,p1,p2);
                 }
 
 
