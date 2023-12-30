@@ -114,11 +114,7 @@ void dfsmove(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1,int c2,in
         F[r1+1][c+1]=flag;
     }
 
-
-
-
-
-            if (flag ==0) {p1->score++; p1->moves++;}
-            else if (flag ==1) {p2->score++; p2->moves++;}
-            //store_move(r1,r2,c1,c2,undo,p1,p2);
+    if (flag ==0) {p1->score++; p1->moves++;}
+    else if (flag ==1) {p2->score++; p2->moves++;}
+    //store_move(r1,r2,c1,c2,undo,p1,p2);
 }
