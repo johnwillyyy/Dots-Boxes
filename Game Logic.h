@@ -110,22 +110,24 @@ void printArray(int * arr, int size) {
 
 void Undo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,player *p2){
 
+
             int temp = undo[p1->moves + p2->moves -1];
             int temp2 = undo[p1->moves + p2->moves -1];
             undo[p1->moves + p2->moves -1] = 0;
             //printf("p1 moves = %d\n",p1->moves);
             //printf("temp  %d",temp); sleep(1);
-            redo[*i] = temp;
-            *i+=1;
-        if(movecount == 0){flag^=1;}
+
+        if(movecount == 0 && redo[0] == 0){flag^=1;}
         int rem = temp%10; int current  = rem; temp/=10;
         rem = temp%10; int c2 = rem; temp/=10;
         rem = temp%10; int c1 = rem; temp/=10;
         rem = temp%10; int r2 = rem; temp/=10;
         rem = temp; int r1 = rem;
-        if(movecount <0 || temp2 == 0){
+        if((movecount == 0 && redo[0] != 0) || movecount <0 || temp2 == 0){
+          //  movecount++;
                 printf("\nYOUCANTUNDO\nEnter move: ");
                 human_move(A,F,undo,redo,p1,p2);
+                flag^=1;
                 }
 
 
@@ -145,11 +147,16 @@ if(r1==r2){
 if(c1==c2){
          int   r = r1<r2?r1:r2;
             A[r+1][c1]=' ';
-            F[r+1][c1]=2;
-}
+            F[r+1][c1]=2;}
+
+            redo[*i] = temp2;
+            *i+=1;
 movecount--;
 return check_box_inv(A,r1,r2,c1,c2,F,flag,p1,p2);
-}}
+
+}
+
+}
 
 
 void Redo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,player *p2){
