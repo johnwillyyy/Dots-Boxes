@@ -83,7 +83,7 @@ void check_box_inv(char A[rows][cols],int r1,int r2,int c1,int c2,int F[rows][co
 
 
 
-void dfsmove(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1,int c2,int right, int left, int up , int down,player *p1,player *p2/*,int *undo*/){
+void dfsmove(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1,int c2,int right, int left, int up , int down,player *p1,player *p2/*int *undo*/){
     int c,r;
     if(r1==r2)
         c= c1<c2 ? c1:c2;

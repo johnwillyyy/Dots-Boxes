@@ -1,21 +1,26 @@
-int rows;
-int cols;
-int count = 0;
-int *i = &count;
-int flag=0;
-int prevflag=0;
-int j =0;
-int r1,r2,c1,c2;
-int movecount =0;
-double match_begun;
-double player_begun;
 int n=1,m=1;
+int rows;
+int cols;           // Board Dimensions
+int count = 0;  
+int *i = &count;    // redo Array Counter
+int flag=0;         // Position flag (flag 0 for player 1 , flag 1 for player 2)
+int r1,r2,c1,c2;    // points' Coordinates
+int movecount =0;   // Number of moves since new turn
+double match_begun;
+double player_begun;// starting times for the game / player's turn
+int exitFlag = 0;   // Thread's exit flag
+int minutes;        // game time (minutes)
+int j =0;
+int x;
 int mode;
-int *pn=&n , *pm=&m , *pmode=&mode;
 
+char **A;           // Main Grid Array
+int **flagARR;      // Flag array 
+int uARR[50]={0};
+int rARR[50]={0};
 
 #define MAX_PLAYERS 10
-#define max_name_length 50
+#define max_name_length 20
 
 #include "Menus.h"
 #include "Box_Check.h"
@@ -23,401 +28,47 @@ int *pn=&n , *pm=&m , *pmode=&mode;
 #include "time_handling.h"
 #include "Game Logic.h"
 #include "Top 10 Players.h"
+#include "DFS.h"
+#include "save_Load.h"
+#include "Game Loop.h"
 
-int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c2,player *p1,player *p2,int right,int left,int up,int down,int check){
-    int x=0,y=0,z=0;
-    if(r1<2||r1>rows-1||r2<2||r2>rows-1||c1<2||c1>cols-1||c2<2||c2>cols-1)return 0;
-    if(r1==r2){
-        int c = c1<c2 ? c1:c2;
-        if(up==0&&down==1){
-            if(A[r1+1][c1]==-70 && A[r1+1][c2]==-70 && A[r1+rows_c][c+1]!=-51){  // move down
-               x=check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,right,left,up,down,check);  //call function to move down
-               if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);       //make a box down
-                    return 1;
-                }
-            }
-            else if(A[r1+1][c1]==-70 && A[r1+1][c2]==-70 && A[r1+rows_c][c+1]==-51){   //check the end of going down
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);     //make a box down
-                    return 1;
-            }
-            else if(A[r1+rows_c][c+1]==-51 && A[r1+1][c]==-70 && A[r1+1][c+cols_c]!=-70){ //moving down then find path right
-                x=check_chain(A,F,r1,r2+rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,check); //call function to move to the right
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make box in the junction
-                    return 1;
-                }
-            }
-            else if(A[r1+rows_c][c+1]==-51 && A[r1+1][c]!=-70 && A[r1+1][c+cols_c]==-70){ //moving down then find path left
-                x=check_chain(A,F,r1,r2+rows_c,c,c,p1,p2,0,1,0,0,check); //call function to move to the left
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make box in the junction
-                    return 1;
-                }
-            }
-            else if(A[r1+rows_c][c+1]==-51 && A[r1+1][c]!=-70 && A[r1+1][c+cols_c]!=-70){ //moving down then find paths right and left
-                x=check_chain(A,F,r1,r2+rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                y=check_chain(A,F,r1,r2+rows_c,c,c,p1,p2,0,1,0,0,1); //call function to check the left
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2+rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    check_chain(A,F,r1,r2+rows_c,c,c,p1,p2,0,1,0,0,0); //call function to to move to the left
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);    //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r1+rows_c][c+1]!=-51 && A[r1+1][c]==-70 && A[r1+1][c+cols_c]!=-70){ //moving down then find paths right and down
-                x=check_chain(A,F,r1,r2+rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                y=check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2+rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r1+rows_c][c+1]!=-51 && A[r1+1][c]!=-70 && A[r1+1][c+cols_c]==-70){ //moving down then find paths left and down
-                x=check_chain(A,F,r1,r2+rows_c,c,c,p1,p2,0,1,0,0,1); //call function check the left
-                y=check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2+rows_c,c,c,p1,p2,0,1,0,0,0); //call function to move to the left
-                    check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r1+rows_c][c+1]!=-51 && A[r1+1][c]!=-70 && A[r1+1][c+cols_c]!=-70){ //moving down then find paths right and left and down
-                x=check_chain(A,F,r1,r2+rows_c,c,c,p1,p2,0,1,0,0,1); //call function check the left
-                y=check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,0,0,0,1,1); //call function to check down
-                z=check_chain(A,F,r1,r2+rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,1); //call function to check the right
-                if(x&&y&&z){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2+rows_c,c,c,p1,p2,0,1,0,0,0); //call function to move to the left
-                    check_chain(A,F,r1+rows_c,r2+rows_c,c1,c2,p1,p2,0,0,0,1,0); //call function to to move down
-                    check_chain(A,F,r1,r2+rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-        }
-        else if(up==1&&down==0){
-            if(A[r1-1][c1]==-70 && A[r1-1][c2]==-70 && A[r1-rows_c][c+1]!=-51){   // move up
-               x=check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,right,left,up,down,check); //call function to move up
-               if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);     //make a box up
-                    return 1;
-                }
-            }
-            else if(A[r1-1][c1]==-70 && A[r1-1][c2]==-70 && A[r1-rows_c][c+1]==-51){      //check the end of going up
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);    //make a box up
-                    return 1;
-            }
-            else if(A[r1-rows_c][c+1]==-51 && A[r1-1][c]==-70 && A[r1-1][c+cols_c]!=-70){ //moving up then find path right
-                x=check_chain(A,F,r1,r2-rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,check); //call function to move to the right
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make box in the junction
-                    return 1;
-                }
-            }
-            else if(A[r1-rows_c][c+1]==-51 && A[r1-1][c]!=-70 && A[r1-1][c+cols_c]==-70){ //moving up then find path left
-                x=check_chain(A,F,r1,r2-rows_c,c,c,p1,p2,0,1,0,0,check); //call function to move to the left
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make box in the junction
-                    return 1;
-                }
-            }
-            else if(A[r1-rows_c][c+1]==-51 && A[r1-1][c]!=-70 && A[r1-1][c+cols_c]!=-70){ //moving up then find paths right and left
-                x=check_chain(A,F,r1,r2-rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                y=check_chain(A,F,r1,r2-rows_c,c,c,p1,p2,0,1,0,0,1); //call function to check the left
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2-rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    check_chain(A,F,r1,r2-rows_c,c,c,p1,p2,0,1,0,0,0); //call function to to move to the left
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r1-rows_c][c+1]!=-51 && A[r1-1][c]==-70 && A[r1-1][c+cols_c]!=-70){ //moving up then find paths right and up
-                x=check_chain(A,F,r1,r2-rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                y=check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,0,0,1,0,1); //call function to check up
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2-rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,0,0,1,0,0); //call function to to move up
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r1-rows_c][c+1]!=-51 && A[r1-1][c]!=-70 && A[r1-1][c+cols_c]==-70){ //moving up then find paths left and up
-                x=check_chain(A,F,r1,r2-rows_c,c,c,p1,p2,0,1,0,0,1); //call function check the left
-                y=check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,0,0,1,0,1); //call function to check up
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2-rows_c,c,c,p1,p2,0,1,0,0,0); //call function to move to the left
-                    check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,0,0,1,0,0); //call function to to move up
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r1-rows_c][c+1]!=-51 && A[r1-1][c]!=-70 && A[r1-1][c+cols_c]!=-70){ //moving up then find paths right and left and up
-                x=check_chain(A,F,r1,r2-rows_c,c,c,p1,p2,0,1,0,0,1); //call function check the left
-                y=check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,0,0,1,0,1); //call function to check up
-                z=check_chain(A,F,r1,r2-rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                if(x&&y&&z){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2-rows_c,c,c,p1,p2,0,1,0,0,0); //call function to move to the left
-                    check_chain(A,F,r1-rows_c,r2-rows_c,c1,c2,p1,p2,0,0,1,0,0); //call function to to move up
-                    check_chain(A,F,r1,r2-rows_c,c+cols_c,c+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-        }
-    }
-    if(c1==c2){
-        int r = r1<r2 ? r1:r2;
-        if(left==0&&right==1){
-            if(A[r][c1+1]==-51 && A[r+rows_c][c1+1]==-51 && A[r+1][c1+cols_c]!=-70){  //move to the right
-               x=check_chain(A,F,r1,r2,c1+cols_c,c2+rows_c,p1,p2,right,left,up,down,check); //call function to move to the right
-               if(x){
-                   /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                   if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2); //make a box on its right
-                  return 1;
-                  }
-            }
-            else if(A[r][c1+1]==-51 && A[r+rows_c][c1+1]==-51 && A[r+1][c1+cols_c]==-70){ //check the end of going right
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make a box on its right
-                    return 1;
-            }
-            else if(A[r][c1+1]==-51 && A[r+rows_c][c1+1]!=-51 && A[r+1][c1+cols_c]==-70){ //moving to the right then find path down
-                x=check_chain(A,F,r+rows_c,r+rows_c,c1,c2+cols_c,p1,p2,0,0,0,1,check); //call function to move down
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make box in the junction
-                    return 1;
-                }
-            }
-            else if(A[r][c1+1]!=-51 && A[r+rows_c][c1+1]==-51 && A[r+1][c1+cols_c]==-70){ //moving to the right then find path up
-                x=check_chain(A,F,r,r,c1,c2+cols_c,p1,p2,0,0,1,0,check);  //call function to move up
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2); //make box at the junction
-                    return 1;
-                }
-            }
-            else if(A[r][c1+1]!=-51 && A[r+rows_c][c1+1]!=-51 && A[r+1][c1+cols_c]==-70){ //moving right then find paths up and down
-                x=check_chain(A,F,r,r,c1,c2+cols_c,p1,p2,0,0,1,0,1); //call function check up
-                y=check_chain(A,F,r+rows_c,r+rows_c,c1,c2+cols_c,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r,r,c1,c2+cols_c,p1,p2,0,0,1,0,0); //call function to move up
-                    check_chain(A,F,r+rows_c,r+rows_c,c1,c2+cols_c,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r][c1+1]==-51 && A[r+rows_c][c1+1]!=-51 && A[r+1][c1+cols_c]!=-70){ //moving right then find paths right and down
-                x=check_chain(A,F,r1,r2,c1+cols_c,c2+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                y=check_chain(A,F,r+rows_c,r+rows_c,c1,c2+cols_c,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2,c1+cols_c,c2+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    check_chain(A,F,r+rows_c,r+rows_c,c1,c2+cols_c,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r][c1+1]!=-51 && A[r+rows_c][c1+1]==-51 && A[r+1][c1+cols_c]!=-70){ //moving right then find paths right and up
-                x=check_chain(A,F,r1,r2,c1+cols_c,c2+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                y=check_chain(A,F,r,r,c1,c2+cols_c,p1,p2,0,0,1,0,1); //call function check up
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2,c1+cols_c,c2+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    check_chain(A,F,r,r,c1,c2+cols_c,p1,p2,0,0,1,0,0);   //call function to to move up
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r][c1+1]!=-51 && A[r+rows_c][c1+1]!=-51 && A[r+1][c1+cols_c]!=-70){ //moving right then find paths right and up and down
-                x=check_chain(A,F,r1,r2,c1+cols_c,c2+cols_c,p1,p2,1,0,0,0,1); //call function check the right
-                y=check_chain(A,F,r,r,c1,c2+cols_c,p1,p2,0,0,1,0,1); //call function check up
-                z=check_chain(A,F,r+rows_c,r+rows_c,c1,c2+cols_c,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y&&z){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2,c1+cols_c,c2+cols_c,p1,p2,1,0,0,0,0); //call function to move to the right
-                    check_chain(A,F,r,r,c1,c2+cols_c,p1,p2,0,0,1,0,0);   //call function to to move up
-                    check_chain(A,F,r+rows_c,r+rows_c,c1,c2+cols_c,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-        }
-        else if(left==1&&right==0){
-            if(A[r][c1-1]==-51 && A[r+rows_c][c1-1]==-51 && A[r+1][c1-cols_c]!=-70){  //move to the left
-                x=check_chain(A,F,r1,r2,c1-cols_c,c2-rows_c,p1,p2,right,left,up,down,check); //call function to move left
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make a box on its left
-                    return 1;
-                }
-            }
-            else if(A[r][c1-1]==-51 && A[r+rows_c][c1-1]==-51 && A[r+1][c1-cols_c]==-70){  //check the end of going left
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2); //make a box on its left
-                    return 1;
-            }
-            else if(A[r][c1-1]==-51 && A[r+rows_c][c1-1]!=-51 && A[r+1][c1-cols_c]==-70){ //moving to the left then find path down
-                x=check_chain(A,F,r+rows_c,r+rows_c,c1,c2-cols_c,p1,p2,0,0,0,1,check); //call function to move down
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);  //make box in the junction
-                    return 1;
-                }
-            }
-            else if(A[r][c1-1]!=-51 && A[r+rows_c][c1-1]==-51 && A[r+1][c1-cols_c]==-70){ //moving to the left then find path up
-                x=check_chain(A,F,r,r,c1,c2-cols_c,p1,p2,0,0,1,0,check);  //call function to move up
-                if(x){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check)dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2); //make box at the junction
-                    return 1;
-                }
-            }
-            else if(A[r][c1-1]!=-51 && A[r+rows_c][c1-1]!=-51 && A[r+1][c1-cols_c]==-70){ //moving left then find paths up and down
-                x=check_chain(A,F,r,r,c1,c2-cols_c,p1,p2,0,0,1,0,1); //call function check up
-                y=check_chain(A,F,r+rows_c,r+rows_c,c1,c2-cols_c,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r,r,c1,c2-cols_c,p1,p2,0,0,1,0,0); //call function to move up
-                    check_chain(A,F,r+rows_c,r+rows_c,c1,c2-cols_c,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r][c1-1]==-51 && A[r+rows_c][c1-1]!=-51 && A[r+1][c1-cols_c]!=-70){ //moving left then find paths left and down
-                x=check_chain(A,F,r1,r2,c1-cols_c,c2-cols_c,p1,p2,0,1,0,0,1); //call function check the left
-                y=check_chain(A,F,r+rows_c,r+rows_c,c1,c2-cols_c,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2,c1-cols_c,c2-cols_c,p1,p2,0,1,0,0,0); //call function to move to the left
-                    check_chain(A,F,r+rows_c,r+rows_c,c1,c2-cols_c,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r][c1-1]!=-51 && A[r+rows_c][c1-1]==-51 && A[r+1][c1-cols_c]!=-70){ //moving left then find paths left and up
-                x=check_chain(A,F,r1,r2,c1-cols_c,c2-cols_c,p1,p2,0,1,0,0,1); //call function check the left
-                y=check_chain(A,F,r,r,c1,c2-cols_c,p1,p2,0,0,1,0,1); //call function check up
-                if(x&&y){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2,c1-cols_c,c2-cols_c,p1,p2,0,1,0,0,0); //call function to move to the left
-                    check_chain(A,F,r,r,c1,c2-cols_c,p1,p2,0,0,1,0,0);   //call function to to move up
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            }
-            else if(A[r][c1-1]!=-51 && A[r+rows_c][c1-1]!=-51 && A[r+1][c1-cols_c]!=-70){ //moving left then find paths left and up and down
-                x=check_chain(A,F,r1,r2,c1-cols_c,c2-cols_c,p1,p2,0,1,0,0,1); //call function check the left
-                y=check_chain(A,F,r,r,c1,c2-cols_c,p1,p2,0,0,1,0,1); //call function check up
-                z=check_chain(A,F,r+rows_c,r+rows_c,c1,c2-cols_c,p1,p2,0,0,0,1,1); //call function to check down
-                if(x&&y&z){
-                    /*printf("%d %d %d %d",r1/2,r2/2,c1/2,c2/2);sleep(2);*/
-                    if(!check){
-                    check_chain(A,F,r1,r2,c1-cols_c,c2-cols_c,p1,p2,0,1,0,0,0); //call function to move to the left
-                    check_chain(A,F,r,r,c1,c2-cols_c,p1,p2,0,0,1,0,0);   //call function to to move up
-                    check_chain(A,F,r+rows_c,r+rows_c,c1,c2-cols_c,p1,p2,0,0,0,1,0); //call function to to move down
-                    dfsmove(A,F,r1,r2,c1,c2,right,left,up,down,p1,p2);   //make box in the junction
-                    }
-                    return 1;
-                }
-            } 
-        }
-    }
-    return 0;
-}
+int *pn=&n ,*pm=&m ,*pmode=&mode;
 
 int main() {
     player topPlayers[MAX_PLAYERS];
-    prevflag = flag;
     system("cls");
     main_menu(pn,pm,pmode,&p1,&p2);
-    int boxes = n*m;
     rows = rows_c*n+rows_c+1;
     cols = cols_c*m+cols_c+1;
-    char A[rows][cols];
-    int flagARR[rows][cols];
-    int uARR[50]={1};
-    int rARR[50]={0};
 
-    for(int i=0;i<rows;i++)
+
+
+
+             A = (char **)malloc(rows * sizeof(char *));  // Allocate memory for rows
+    for (int i = 0; i < rows; i++) {
+        A[i] = (char *)malloc(cols * sizeof(char));  // Allocate memory for columns
+    }
+
+ flagARR = (int **)malloc(rows * sizeof(int *));  // Allocate memory for rows
+    for (int i = 0; i < rows; i++) {
+        flagARR[i] = (int *)malloc(cols * sizeof(int));  // Allocate memory for columns
+    }
+
+        for(int i=0;i<rows;i++)
         for(int j=0;j<cols;j++)
             flagARR[i][j]=2;
+        for(int i=0;i<rows;i++)
+        for(int j=0;j<cols;j++)
+            A[i][j]=0;
+
+    
     system("cls");
     create_grid(A);
     print_grid(A,flagARR);
-    print_data(p1,p2,match_begun,boxes);
+    print_data(p1,p2,match_begun,n*m);
     clock_t match_begun = clock();
 
-    while(p1.score+p2.score < n*m){
-if(mode == 0 || (mode==1 && flag==0)){
-flag = human_move(A,flagARR,uARR,rARR,&p1,&p2);
-}
-
-if(flag == 1 && mode == 1){
-flag = computer_move(A,flagARR,&p1,&p2);
-}
-            system("cls");
-            print_grid(A,flagARR);
-            print_data(p1,p2,match_begun,boxes);
-            printArray(uARR, 50);
-            printf("\n");
-            printArray(rARR, count);
-            printf("\n");
-            printf("Count = %d | ",count);
-            printf("MOVECOUNT = %d | ", movecount);
-            printf("FLAG = %d\n", flag);
-
-    }
+   gameLoop();
 
     if(p1.score>p2.score)
 {
@@ -435,8 +86,7 @@ flag = computer_move(A,flagARR,&p1,&p2);
     readTopScores(topPlayers);
     updateTopScores(topPlayers, winnerName, winnerScore);
     writeTopScores(topPlayers);
-    //display();
+    display();
 
 
 }
-

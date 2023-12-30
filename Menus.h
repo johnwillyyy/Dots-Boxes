@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
+//#include <pthread.h>
+
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
 #define YEL   "\x1B[33m"
@@ -20,6 +23,10 @@ int moves;
 }player;
 player p1;
 player p2;
+
+
+
+
 
 
 
@@ -50,12 +57,12 @@ void mode_menu(int *pn,int *pm,int *pmode,player *p1,player *p2){
     scanf("%d",&input);
     if (input == 1){
         *pmode = 0;
-        printf("Enter Player 1 name: ");scanf("%s",p1->name);printf("\n");
-        printf("Enter Player 2 name: ");scanf("%s",p2->name);printf("\n");
+        printf("Enter Player 1 name: ");    scanf( "%c", (char *) stdin);   gets(p1->name);
+        printf("Enter Player 2 name: ");   gets(p2->name);
         grid_menu(pn,pm);}
     else if (input == 2){
         *pmode = 1;
-       printf("Enter Player name: ");scanf("%s",p1->name);
+       printf("Enter Player name: ");scanf( "%c", (char *) stdin);   gets(p1->name);
        strcpy(p2->name, "Mina&John");
        grid_menu(pn,pm);}
     else {printf("Please enter a valid choice\n");
@@ -82,7 +89,13 @@ scanf("%d",&input);
         mode_menu(pn,pm,pmode,p1,p2);
 }
     else if (input == 2){ printf("Choice 2");}
-    else if (input == 3){ printf("Choice 3");}
+    else if (input == 3){ printf("\n");
+    display();
+    sleep(5);
+    system("cls");
+    main_menu(pn,pm,pmode,p1,p2);
+    
+    }
     else if (input == 4){ exit(1);}
     else    {printf("Please enter a valid choice\n");
     sleep(1);

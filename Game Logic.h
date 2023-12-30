@@ -1,30 +1,29 @@
 void check_special_entries(int r1,int r2,int c1,int c2,char A[rows][cols],int F[rows][cols],player *p1,player *p2,int *store,int *redo){
-if(r1==-1 && r2==-1 && c1==-1 && c2==-1){exit(0);}
-else if(r1==1 && r2==1 && c1==1 && c2==1)printf("SAVE GAME Functionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+if(r1==-1 && r2==-1 && c1==-1 && c2==-1)exit(0);
+else if(r1==1 && r2==1 && c1==1 && c2==1){
+    askUserForString();
+}
 else if(r1==2 && r2==2 && c1==2 && c2==2)Undo(A,F,store,redo, p1,p2);
 else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,store,redo, p1,p2);
 }
 
 
 
-int human_move(char A[rows][cols],int F[rows][cols],int *undo,int *redo, player *p1,player*p2){
-
+int human_move(char **A,int **F,int *undo,int *redo, player *p1,player*p2){
 
 player_begun = clock();
-    printf("%f\n",player_begun);
 //pthread_t timer;
  int r1,r2,c1,c2;
-//pthread_create(&timer, NULL, timerThread, &exitFlag);
+//        pthread_create(&timer, NULL, timerThread, &exitFlag);
  scanf("%d %d %d %d",&r1,&r2,&c1,&c2);
-//exitFlag = 1;
+        exitFlag = 1;
 
-        // printf("%d\n",current_time(player_begun));
-        // sleep(1);
 
 //pthread_cancel(timer);
-     //exitFlag = 0;
+//     exitFlag = 0;
 
  move(r1,r2,c1,c2,A,F,undo,redo,p1,p2);
+
 }
 
 
@@ -118,16 +117,18 @@ void Undo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,
             //printf("temp  %d",temp); sleep(1);
             redo[*i] = temp;
             *i+=1;
-         if(movecount == 0){flag^=1;}
+        if(movecount == 0){flag^=1;}
         int rem = temp%10; int current  = rem; temp/=10;
         rem = temp%10; int c2 = rem; temp/=10;
         rem = temp%10; int c1 = rem; temp/=10;
         rem = temp%10; int r2 = rem; temp/=10;
         rem = temp; int r1 = rem;
-        if(movecount <0 || temp2 == 0){printf("\nYOUCANTUNDO\nEnter move: ");human_move(A,F,undo,redo,p1,p2);}
+        if(movecount <0 || temp2 == 0){
+                printf("\nYOUCANTUNDO\nEnter move: ");
+                human_move(A,F,undo,redo,p1,p2);
+                }
 
 
-        //if (){flag^=1;}
 
         else{
         r1=rows_c*r1;

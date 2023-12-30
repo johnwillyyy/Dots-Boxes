@@ -24,7 +24,7 @@ void print_grid(char A[rows][cols],int F[rows][cols]){
                 if(F[i][j]==0)
                     printf(RED"%c"RESET,A[i][j]);
                 else if(F[i][j]==1)
-                    printf(BLU"%c"RESET,A[i][j]);
+                    printf(BLU "%c"RESET,A[i][j]);
                 else
                     printf("%c",A[i][j]);
             }
@@ -32,7 +32,7 @@ void print_grid(char A[rows][cols],int F[rows][cols]){
                     if(F[i][j]==0)
                         printf(RED"%c%c%c"RESET,A[i][j],A[i][j],A[i][j]);
                     else if(F[i][j]==1)
-                        printf(BLU"%c%c%c"RESET,A[i][j],A[i][j],A[i][j]);
+                        printf(BLU "%c%c%c"RESET,A[i][j],A[i][j],A[i][j]);
                     else
                         printf("%c%c%c",A[i][j],A[i][j],A[i][j]);
             }
@@ -50,7 +50,7 @@ printf(BLU"\t\t\t\tPlayer 2\n"RESET);
 
 
 printf(RED"Name: %s"RESET,p1.name);
-printf(BLU"\t\t\t\tName: %s\n"RESET,p2.name);
+printf(BLU"\t\t\t\t\tName: %s\n"RESET,p2.name);
 
 
 printf(RED"Score = %d"RESET,p1.score);
@@ -59,8 +59,8 @@ printf(BLU"\t\t\t\tScore = %d\n"RESET,p2.score);
 printf(RED"moves: %d"RESET,p1.moves);
 printf(BLU"\t\t\t\tmoves: %d\n"RESET,p2.moves);
 
-printf(CYN"Time: ");
-current_time(begin);
+printf(CYN"Time: %d:%d",minutes,current_time(begin));
+
 
 printf("\t\t\t\tRemaining BOXES = %d\n"RESET,(boxes) - (p2.score+p1.score));
 
