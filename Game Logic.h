@@ -1,7 +1,7 @@
 void check_special_entries(int r1,int r2,int c1,int c2,char A[rows][cols],int F[rows][cols],player *p1,player *p2,int *store,int *redo){
 if(r1==-1 && r2==-1 && c1==-1 && c2==-1)exit(0);
 else if(r1==1 && r2==1 && c1==1 && c2==1){
-    askUserForString();
+   save_Game();
 }
 else if(r1==2 && r2==2 && c1==2 && c2==2)Undo(A,F,store,redo, p1,p2);
 else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,store,redo, p1,p2);
@@ -12,15 +12,49 @@ else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,store,redo, p1,p2);
 int human_move(char **A,int **F,int *undo,int *redo, player *p1,player*p2){
 
 player_begun = clock();
-//pthread_t timer;
+                    //pthread_t timer;
  int r1,r2,c1,c2;
-//        pthread_create(&timer, NULL, timerThread, &exitFlag);
- scanf("%d %d %d %d",&r1,&r2,&c1,&c2);
-        exitFlag = 1;
+                    //pthread_create(&timer, NULL, timerThread, &exitFlag);
+int numbers[4];
+    int parsed;
 
+    // Keep prompting the user until correct input is provided
+    do {
+        // Prompt user for input
+        printf("Enter four numbers separated by spaces: ");
+        // Use scanf to parse the input
+        parsed = scanf("%d%d%d%d", &numbers[0], &numbers[1], &numbers[2], &numbers[3]);
+        // Consume the remaining characters in the input buffer
+        while (getchar() != '\n');
+        // Check if scanf successfully parsed 4 integers
+        if (parsed == 4) {
+            // Check if each number is a digit
+            int isValid = 1;
+            for (int i = 0; i < 4; i++) {
+                if (isdigit(numbers[i])) {
+                    printf("Error: Non-digit character detected.\n");
+                    isValid = 0;
+                    break;
+                }
+            }
+            // Display the parsed numbers if input is valid
+            if (isValid) {
+                printf("Parsed numbers: %d %d %d %d\n", numbers[0], numbers[1], numbers[2], numbers[3]);
+                r1 = numbers[0];
+                r2 = numbers[1];
+                c1 = numbers[2];
+                c2 = numbers[3];
+                break;  // Exit the loop if input is valid
+            }
+        }
+        else {
+            printf("Error: Invalid input format.\n");
+        }
+    } while (1);  // Infinite loop until valid input is provided
 
-//pthread_cancel(timer);
-//     exitFlag = 0;
+                    //exitFlag = 1;
+                    //pthread_cancel(timer);
+                    //     exitFlag = 0;
 
  move(r1,r2,c1,c2,A,F,undo,redo,p1,p2);
 
@@ -33,17 +67,17 @@ player_begun = clock();
 int move(int r1,int r2,int c1, int c2,char A[rows][cols],int F[rows][cols],int *undo,int *redo, player *p1,player*p2){
        int c,r,valid;
         char place;
-        if(r1 <= rows && r2 <= rows && c1 <= cols && c2 <= cols){
-            if (r1==r2 && c1==c2) {check_special_entries(r1,r2,c1,c2,A,F,p1,p2,undo,redo);return flag;}
+        if(r1 <= n+1 && r2 <= n+1 && c1 <= m+1 && c2 <= m+1){
+            if (r1==r2 && c1==c2 && r1==c2) {check_special_entries(r1,r2,c1,c2,A,F,p1,p2,undo,redo);return flag;}
 
             else if (r1==r2 && abs(c1-c2) == 1){place = '1'; store_move(r1,r2,c1,c2,undo,p1,p2);valid=1;}
 
             else if (c1==c2 && abs(r1-r2) == 1){place = '2'; store_move(r1,r2,c1,c2,undo,p1,p2);valid=1;}
-
+        }
             else {
                 printf("\nEnter Valid input: ");
                 human_move(A,F,undo,redo,p1,p2);}
-        }
+
         if(valid==1){for(int k = count; k>=0; k--){
             redo[k] = 0;
             count = 0;
@@ -194,8 +228,49 @@ check_box(A,r1,r2,c1,c2,F,current,p1,p2);
 }
 
 
+bool checkDigits(char *str) {
+    while (*str) {
+        if (!isdigit(*str)) {
+            return false;
+        }
+        str++;
+    }
+    return true;
+}
 
+void separateNumbers(char *str, int *r1, int *r2, int *c1, int *c2) {
+    int count = 0;
+    char *token = strtok(str, " ");
+   // printf("%s\n",token);
 
+        if (token != NULL && count < 4 && checkDigits(token)) {
+                r1 = atoi(token);
+                printf("r1 = %d",r1);sleep(2);
+                count++;
+                token = strtok(NULL, " ");
+    }
+            if (token != NULL && count < 4 && checkDigits(token)) {
+                r2 = atoi(token);
+                printf("r2 = %d",r2);sleep(2);
+
+                count++;
+                token = strtok(NULL, " ");
+    }
+            if (token != NULL && count < 4 && checkDigits(token)) {
+                c1 = atoi(token);
+                count++;
+                token = strtok(NULL, " ");
+    }
+            if (token != NULL && count < 4 && checkDigits(token)) {
+                c2 = atoi(token);
+                count++;
+                token = strtok(NULL, " ");
+    }
+
+    if (count != 4) {
+        printf("Error: Invalid input\n");
+    }
+}
 
 
 

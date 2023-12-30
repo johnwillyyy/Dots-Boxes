@@ -1,1 +1,0 @@
-    scanf("%c", (char *) stdin);

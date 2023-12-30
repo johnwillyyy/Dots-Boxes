@@ -22,19 +22,19 @@ void print_grid(char A[rows][cols],int F[rows][cols]){
         for (int j=0;j<cols;j++){
             if(j%cols_c==0){
                 if(F[i][j]==0)
-                    printf(RED"%c"RESET,A[i][j]);
+                    printf(YEL "%c" RESET,A[i][j]);
                 else if(F[i][j]==1)
-                    printf(BLU "%c"RESET,A[i][j]);
+                    printf(CYN "%c" RESET,A[i][j]);
                 else
-                    printf("%c",A[i][j]);
+                    printf(RESET "%c" RESET,A[i][j]);
             }
             else{
                     if(F[i][j]==0)
-                        printf(RED"%c%c%c"RESET,A[i][j],A[i][j],A[i][j]);
+                        printf(YEL "%c%c%c" RESET,A[i][j],A[i][j],A[i][j]);
                     else if(F[i][j]==1)
-                        printf(BLU "%c%c%c"RESET,A[i][j],A[i][j],A[i][j]);
+                        printf(CYN "%c%c%c" RESET,A[i][j],A[i][j],A[i][j]);
                     else
-                        printf("%c%c%c",A[i][j],A[i][j],A[i][j]);
+                        printf( "%c%c%c",A[i][j],A[i][j],A[i][j]);
             }
         }
     }
@@ -50,7 +50,7 @@ printf(BLU"\t\t\t\tPlayer 2\n"RESET);
 
 
 printf(RED"Name: %s"RESET,p1.name);
-printf(BLU"\t\t\t\t\tName: %s\n"RESET,p2.name);
+printf(BLU"\t\t\t\tName: %s\n"RESET,p2.name);
 
 
 printf(RED"Score = %d"RESET,p1.score);

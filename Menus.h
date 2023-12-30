@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <stdbool.h>
 //#include <pthread.h>
 
 #define RED   "\x1B[31m"
@@ -23,10 +24,8 @@ int moves;
 }player;
 player p1;
 player p2;
-
-
-
-
+player topPlayers[MAX_PLAYERS];
+FILE *file;
 
 
 
@@ -88,15 +87,18 @@ scanf("%d",&input);
     if(input == 1){
         mode_menu(pn,pm,pmode,p1,p2);
 }
-    else if (input == 2){ printf("Choice 2");}
-    else if (input == 3){ printf("\n");
+    else if (input == 2){ loadGame("lolo.txt",p1, p2);}
+
+    else if (input == 3){
+    printf("\n");
     display();
     sleep(5);
     system("cls");
     main_menu(pn,pm,pmode,p1,p2);
-    
     }
-    else if (input == 4){ exit(1);}
+
+    else if (input == 4){ exit(0);}
+
     else    {printf("Please enter a valid choice\n");
     sleep(1);
     system("cls");
