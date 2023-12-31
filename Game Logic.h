@@ -67,7 +67,7 @@ int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, play
 
        int c,r,valid;
         char place;
-        if(r1 <= n+1 && r2 <= n+1 && c1 <= m+1 && c2 <= m+1){
+        if(r1 <= n+1 && r2 <= n+1 && c1 <= m+1 && c2 <= m+1 && r1 > 0 && r2 > 0 && c1 > 0 && c2 > 0){
             if (r1==r2 && c1==c2 && r1==c2) {check_special_entries(r1,r2,c1,c2,A,F,p1,p2,undo,redo);return flag;}
 
             else if (r1==r2 && abs(c1-c2) == 1){place = '1'; store_move(r1,r2,c1,c2,undo,p1,p2);valid=1;}
