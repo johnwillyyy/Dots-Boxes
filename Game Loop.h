@@ -10,7 +10,6 @@ void allocateArrays(){
     }
 }
 
-
 void gameLoop(char **A,int **flagARR){
  while(p1.score+p2.score < n*m){
 if(mode == 0 || (mode==1 && flag==0)){

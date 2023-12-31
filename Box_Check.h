@@ -3,48 +3,45 @@ int check_box(char **A,int r1,int r2,int c1,int c2,int **F,int flag,player *p1,p
     int check=0,checkinv =0,right=0,left=0,up=0,down=0;
     if(r1==r2){
         int c = c1<c2 ? c1:c2;
-
-        if(A[r1-1][c1]==-70&&A[r1-1][c2]==-70&&A[r1-rows_c][c+1]==-51){
-                if(A[r1-1][c+1] != 178){
-                    A[r1-1][c+1]=178;
-                    F[r1-1][c+1]=flag;
-                    check++;
-                    down=1;}
-
+        if(r1-1>=2&&A[r1-1][c1]==-70&&A[r1-1][c2]==-70&&A[r1-rows_c][c+1]==-51){   //check the edge and that the there is a box
+                A[r1-1][c+1]=178;
+                F[r1-1][c+1]=flag;      //make box with players colour
+                check++;    //calculate no of boxes 
+                down=1;     //dertermine the direction which is sent to check_chain
         }
-        if(A[r1+1][c1]==-70&&A[r1+1][c2]==-70&&A[r1+rows_c][c+1]==-51){
+        if(r1+1<rows&&A[r1+1][c1]==-70&&A[r1+1][c2]==-70&&A[r1+rows_c][c+1]==-51){  //check the edge and that the there is a box
             A[r1+1][c+1]=178;
-            F[r1+1][c+1]=flag;
-            check++;
-            up=1;
+            F[r1+1][c+1]=flag;          //make box with players colour
+            check++;        //calculate no of boxes
+            up=1;           //dertermine the direction which is sent to check_chain
         }
     }
     else if(c1==c2){
         int r = r1<r2 ? r1:r2;
-        if(A[r1][c1-1]==-51&&A[r2][c1-1]==-51&&A[r+1][c1-cols_c]==-70){
+        if(c1-1>=2&&A[r1][c1-1]==-51&&A[r2][c1-1]==-51&&A[r+1][c1-cols_c]==-70){    //check the edge and that the there is a box
             A[r+1][c1-1]=178;
-            F[r+1][c1-1]=flag;
-            check++;
-            right=1;
+            F[r+1][c1-1]=flag;          //make box with players colour
+            check++;        //calculate no of boxes
+            right=1;        //dertermine the direction which is sent to check_chain
         }
-        if(A[r1][c1+1]==-51&&A[r2][c1+1]==-51&&A[r+1][c1+cols_c]==-70){
+        if(c1+1<cols&&A[r1][c1+1]==-51&&A[r2][c1+1]==-51&&A[r+1][c1+cols_c]==-70){  //check the edge and that the there is a box
             A[r+1][c1+1]=178;
-            F[r+1][c1+1]=flag;
-            check++;
-            left=1;
+            F[r+1][c1+1]=flag;          //make box with players colour
+            check++;        //calculate no of boxes
+            left=1;         //dertermine the direction which is sent to check_chain
         }
     }
     movecount++;
 
 
-    if (check>0) {
-            if (flag ==0) {p1->score+=check; return flag;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);}
-            else if (flag ==1) {p2->score+=check;  return flag;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);}
+    if (check>0) {      //if there is a box update players score and check if there is a chain and make the player get another turn
+            if (flag ==0) {p1->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0); return flag;}
+            else if (flag ==1) {p2->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);  return flag;}
     }
     else {movecount = 0;
                 if(r1 ==(n+1)){printf("YARABB");sleep(2);}
 
-            return flag^=1;
+            return flag^=1;         //change player turn
 }}
 
 

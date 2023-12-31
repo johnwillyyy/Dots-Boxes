@@ -41,9 +41,7 @@ int main() {
     rows = rows_c*n+rows_c+1;
     cols = cols_c*m+cols_c+1;
     allocateArrays();
-
     gameInit(A,flagARR);
-
     gameLoop(A,flagARR);
     winnerCheck();
     Top10Save();
