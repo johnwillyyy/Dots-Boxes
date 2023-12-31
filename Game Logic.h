@@ -2,6 +2,7 @@ void check_special_entries(int r1,int r2,int c1,int c2,char A[rows][cols],int F[
 if(r1==-1 && r2==-1 && c1==-1 && c2==-1)exit(0);
 else if(r1==1 && r2==1 && c1==1 && c2==1){
    save_Game();
+   human_move(A,F,store,redo,p1,p2);
 }
 else if(r1==2 && r2==2 && c1==2 && c2==2)Undo(A,F,store,redo, p1,p2);
 else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,store,redo, p1,p2);

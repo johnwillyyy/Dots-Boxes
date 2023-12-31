@@ -70,6 +70,4 @@ printf("\t\t\t\t\t(Enter 2 2 2 2 to Undo)\n");
 printf("\t\t\t\t\t(Enter 3 3 3 3 to Redo)\n");
 if (flag == 0)printf(YEL "Player 1 Turn\nEnter your move:" RESET);
 else printf(CYN "Player 2 Turn\nEnter your move:" RESET);
-
-
 }
