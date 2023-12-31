@@ -35,8 +35,8 @@ int check_box(char **A,int r1,int r2,int c1,int c2,int **F,int flag,player *p1,p
 
 
     if (check>0) {      //if there is a box update players score and check if there is a chain and make the player get another turn
-            if (flag ==0) {p1->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0); return flag;}
-            else if (flag ==1) {p2->score+=check;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);  return flag;}
+            if (flag ==0) {p1->score+=check;printf("mina");sleep(3);check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);printf("mina");sleep(3); return flag;}
+            else if (flag ==1) {p2->score+=check;printf("mina");sleep(3);check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);printf("mina");sleep(3);  return flag;}
     }
     else {movecount = 0;
                 if(r1 ==(n+1)){printf("YARABB");sleep(2);}
