@@ -62,17 +62,33 @@ void mode_menu(int *pn,int *pm,int *pmode,player *p1,player *p2){
         if(scanf("%d",&input)!=1);
             while(getchar()!='\n');
     }while(input!=1&&input!=2);
-
+    
+    char x;
     switch(input){
     case 1:                     //Human vs. Human
         *pmode = 0;
-        printf("Enter Player 1 name: ");scanf( "%c", (char *) stdin);gets(p1->name); //get first player name
-        printf("Enter Player 2 name: ");gets(p2->name);     //get second player name
+        printf("Enter Player 1 name: ");
+
+        do{x=getchar();         //skip invalid inputs
+        }while(x=='\n'||x==' '||x=='\t');
+        gets(p1->name);         //get first player name
+
+        printf("Enter Player 2 name: ");
+
+        do{x=getchar();         //skip invalid inputs
+        }while(x=='\n'||x==' '||x=='\t');
+        gets(p2->name);     //get second player name
+
         grid_menu(pn,pm);
         break;
     case 2:                     //Human vs. Computer
         *pmode = 1;
-       printf("Enter Player name: ");scanf( "%c", (char *) stdin);gets(p1->name);  //get player name
+       printf("Enter Player name: ");
+
+       do{x=getchar();         //skip invalid inputs
+        }while(x=='\n'||x==' '||x=='\t');
+       gets(p1->name);  //get player name
+
        strcpy(p2->name, "Mina&John");
        grid_menu(pn,pm);
        break;
