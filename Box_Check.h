@@ -37,8 +37,8 @@ int check_box(char A[rows][cols],int r1,int r2,int c1,int c2,int F[rows][cols],i
     movecount++;
 
     if (check>0) {
-            if (flag ==0) {p1->score+=check; check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);return flag;}
-            else if (flag ==1) {p2->score+=check;  check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);return flag;}
+            if (flag ==0) {p1->score+=check; return flag;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);}
+            else if (flag ==1) {p2->score+=check;  return flag;check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);}
     }
     else {movecount = 0;
             return flag^=1;

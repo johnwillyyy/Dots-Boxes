@@ -189,7 +189,7 @@ void loadGame(char *filename,player p1, player p2){
 void save_Game(){
     char filename[MAX_FILENAME_LENGTH];
     char userString[MAX_STRING_LENGTH];
-    printf("Enter a string: \n");
+    printf("Enter Game name: \n");
     // Prompt the user for a string
 
     // Use fgets to read the entire line of input, including spaces

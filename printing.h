@@ -44,32 +44,32 @@ void print_grid(char A[rows][cols],int F[rows][cols]){
 
 void print_data(player p1,player p2,double begin,int boxes){
 
-printf(RED"Player 1"RESET);
-printf(BLU"\t\t\t\tPlayer 2\n"RESET);
+printf(YEL"Player 1"RESET);
+printf(CYN"\t\t\t\tPlayer 2\n"RESET);
 
 
 
-printf(RED"Name: %s"RESET,p1.name);
-printf(BLU"\t\t\t\tName: %s\n"RESET,p2.name);
+printf(YEL"Name: %s"RESET,p1.name);
+printf(CYN"\t\t\t\tName: %s\n"RESET,p2.name);
 
 
-printf(RED"Score = %d"RESET,p1.score);
-printf(BLU"\t\t\t\tScore = %d\n"RESET,p2.score);
+printf(YEL"Score = %d"RESET,p1.score);
+printf(CYN"\t\t\t\tScore = %d\n"RESET,p2.score);
 
-printf(RED"moves: %d"RESET,p1.moves);
-printf(BLU"\t\t\t\tmoves: %d\n"RESET,p2.moves);
+printf(YEL"moves: %d"RESET,p1.moves);
+printf(CYN"\t\t\t\tmoves: %d\n"RESET,p2.moves);
 
-printf(CYN"Time: %d:%d",minutes,current_time(begin));
+printf(BLU"Time: %d:%d",minutes,current_time(begin));
 
 
 printf("\t\t\t\tRemaining BOXES = %d\n"RESET,(boxes) - (p2.score+p1.score));
 
-printf(YEL"Enter your move: \n"RESET);
-printf("\t\t\t\t(Enter -1 -1 -1 -1 to exit game)\n");
-printf("\t\t\t\t(Enter 1 1 1 1 to save game)\n");
-printf("\t\t\t\t(Enter 2 2 2 2 to Undo)\n");
-printf("\t\t\t\t(Enter 3 3 3 3 to Redo)\n");
-
+printf("\t\t\t\t\t(Enter -1 -1 -1 -1 to exit game)\n");
+printf("\t\t\t\t\t(Enter 1 1 1 1 to save game)\n");
+printf("\t\t\t\t\t(Enter 2 2 2 2 to Undo)\n");
+printf("\t\t\t\t\t(Enter 3 3 3 3 to Redo)\n");
+if (flag == 0)printf(YEL "Player 1 Turn\nEnter your move:" RESET);
+else printf(CYN "Player 2 Turn\nEnter your move:" RESET);
 
 
 }

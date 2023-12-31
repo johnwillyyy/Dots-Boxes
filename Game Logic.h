@@ -14,14 +14,13 @@ int human_move(char **A,int **F,int *undo,int *redo, player *p1,player*p2){
 player_begun = clock();
                     //pthread_t timer;
  int r1,r2,c1,c2;
-                    //pthread_create(&timer, NULL, timerThread, &exitFlag);
+                   // pthread_create(&timer, NULL, timerThread, &exitFlag);
 int numbers[4];
     int parsed;
 
     // Keep prompting the user until correct input is provided
     do {
         // Prompt user for input
-        printf("Enter four numbers separated by spaces: ");
         // Use scanf to parse the input
         parsed = scanf("%d%d%d%d", &numbers[0], &numbers[1], &numbers[2], &numbers[3]);
         // Consume the remaining characters in the input buffer
@@ -39,7 +38,7 @@ int numbers[4];
             }
             // Display the parsed numbers if input is valid
             if (isValid) {
-                printf("Parsed numbers: %d %d %d %d\n", numbers[0], numbers[1], numbers[2], numbers[3]);
+                //printf("Parsed numbers: %d %d %d %d\n", numbers[0], numbers[1], numbers[2], numbers[3]);
                 r1 = numbers[0];
                 r2 = numbers[1];
                 c1 = numbers[2];
@@ -52,9 +51,9 @@ int numbers[4];
         }
     } while (1);  // Infinite loop until valid input is provided
 
-                    //exitFlag = 1;
+                   // exitFlag = 1;
                     //pthread_cancel(timer);
-                    //     exitFlag = 0;
+                         //exitFlag = 0;
 
  move(r1,r2,c1,c2,A,F,undo,redo,p1,p2);
 
@@ -148,8 +147,7 @@ void Undo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,
             int temp = undo[p1->moves + p2->moves -1];
             int temp2 = undo[p1->moves + p2->moves -1];
             undo[p1->moves + p2->moves -1] = 0;
-            //printf("p1 moves = %d\n",p1->moves);
-            //printf("temp  %d",temp); sleep(1);
+
 
         if(movecount == 0 && redo[0] == 0){flag^=1;}
         int rem = temp%10; int current  = rem; temp/=10;
@@ -158,10 +156,8 @@ void Undo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,
         rem = temp%10; int r2 = rem; temp/=10;
         rem = temp; int r1 = rem;
         if((movecount == 0 && redo[0] != 0) || movecount <0 || temp2 == 0){
-          //  movecount++;
                 printf("\nYOUCANTUNDO\nEnter move: ");
                 flag = human_move(A,F,undo,redo,p1,p2);
-             //   flag = check_box(A,r1,r2,c1,c2,F,flag,p1,p2);
                 }
 
 
@@ -226,52 +222,4 @@ void Redo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,
 check_box(A,r1,r2,c1,c2,F,current,p1,p2);
         }
 }
-
-
-bool checkDigits(char *str) {
-    while (*str) {
-        if (!isdigit(*str)) {
-            return false;
-        }
-        str++;
-    }
-    return true;
-}
-
-void separateNumbers(char *str, int *r1, int *r2, int *c1, int *c2) {
-    int count = 0;
-    char *token = strtok(str, " ");
-   // printf("%s\n",token);
-
-        if (token != NULL && count < 4 && checkDigits(token)) {
-                r1 = atoi(token);
-                printf("r1 = %d",r1);sleep(2);
-                count++;
-                token = strtok(NULL, " ");
-    }
-            if (token != NULL && count < 4 && checkDigits(token)) {
-                r2 = atoi(token);
-                printf("r2 = %d",r2);sleep(2);
-
-                count++;
-                token = strtok(NULL, " ");
-    }
-            if (token != NULL && count < 4 && checkDigits(token)) {
-                c1 = atoi(token);
-                count++;
-                token = strtok(NULL, " ");
-    }
-            if (token != NULL && count < 4 && checkDigits(token)) {
-                c2 = atoi(token);
-                count++;
-                token = strtok(NULL, " ");
-    }
-
-    if (count != 4) {
-        printf("Error: Invalid input\n");
-    }
-}
-
-
-
 

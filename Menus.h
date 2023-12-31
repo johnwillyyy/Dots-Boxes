@@ -13,6 +13,7 @@
 #define BLU   "\x1B[34m"
 #define RESET "\x1B[0m"
 #define CYN   "\x1B[36m"
+#define MAG "\e[0;35m"
 
 #define rows_c 2
 #define cols_c 2
@@ -32,8 +33,8 @@ FILE *file;
 void grid_menu(int *pn,int *pm){
 system("cls");
 printf("Select Grid Size\n");
-printf( RED"1- Easy | 2x2 Grid\n\n"RESET);
-printf( BLU"2- Expert | 5x5 Grid\n\n"RESET);
+printf( CYN"1- Easy | 2x2 Grid\n\n"RESET);
+printf( RED"2- Expert | 5x5 Grid\n\n"RESET);
 printf( YEL"3- Custom Grid\n\n"RESET);
 int input;
 scanf("%d",&input);
@@ -50,8 +51,8 @@ scanf("%d",&input);
 void mode_menu(int *pn,int *pm,int *pmode,player *p1,player *p2){
     system("cls");
     printf("Select Game Mode\n");
-    printf( RED"1- Human vs. Human\n\n"RESET);
-    printf( BLU"2- Human vs. Computer\n\n"RESET);
+    printf( YEL"1- Human vs. Human\n\n"RESET);
+    printf( CYN"2- Human vs. Computer\n\n"RESET);
     int input;
     scanf("%d",&input);
     if (input == 1){
@@ -77,9 +78,9 @@ void mode_menu(int *pn,int *pm,int *pmode,player *p1,player *p2){
 
 void main_menu(int *pn,int *pm, int *pmode, player *p1, player *p2){
 
-printf( RED"1- New Game\n\n"RESET);
+printf( CYN"1- New Game\n\n"RESET);
 printf( BLU"2- Load Game\n\n"RESET);
-printf( BLU"3- Top 10 Players\n\n"RESET);
+printf( YEL"3- Top 10 Players\n\n"RESET);
 printf( GRN"4- EXIT\n\n"RESET);
 printf( "Select A Number: ");
 int input;
