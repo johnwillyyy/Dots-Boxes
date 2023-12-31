@@ -1,4 +1,4 @@
-int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c2,player *p1,player *p2,int right,int left,int up,int down,int check){
+int check_chain(char **A,int **F,int r1,int r2,int c1, int c2,player *p1,player *p2,int right,int left,int up,int down,int check){
     int x=0,y=0,z=0;
     if(r1<2||r1>rows-1||r2<2||r2>rows-1||c1<2||c1>cols-1||c2<2||c2>cols-1)return 0;
     if(r1==r2){
@@ -344,7 +344,7 @@ int check_chain(char A[rows][cols],int F[rows][cols],int r1,int r2,int c1, int c
                     }
                     return 1;
                 }
-            } 
+            }
         }
     }
     return 0;

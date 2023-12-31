@@ -1,14 +1,13 @@
-void check_special_entries(int r1,int r2,int c1,int c2,char A[rows][cols],int F[rows][cols],player *p1,player *p2,int *store,int *redo){
+void check_special_entries(int r1,int r2,int c1,int c2,char **A,int **F,player *p1,player *p2,int *undo,int *redo){
 if(r1==-1 && r2==-1 && c1==-1 && c2==-1)exit(0);
 else if(r1==1 && r2==1 && c1==1 && c2==1){
    save_Game();
-   human_move(A,F,store,redo,p1,p2);
+   printf("\nGame Saved Successfully");
+   sleep(1);
 }
-else if(r1==2 && r2==2 && c1==2 && c2==2)Undo(A,F,store,redo, p1,p2);
-else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,store,redo, p1,p2);
+else if(r1==2 && r2==2 && c1==2 && c2==2)Undo(A,F,undo,redo, p1,p2);
+else if(r1==3 && r2==3 && c1==3 && c2==3)Redo(A,F,undo,redo, p1,p2);
 }
-
-
 
 int human_move(char **A,int **F,int *undo,int *redo, player *p1,player*p2){
 
@@ -50,8 +49,8 @@ int numbers[4];
         else {
             printf("Error: Invalid input format.\n");
         }
-    } while (1);  // Infinite loop until valid input is provided
-
+    } while (1);
+    // Infinite loop until valid input is provided
                    // exitFlag = 1;
                     //pthread_cancel(timer);
                          //exitFlag = 0;
@@ -64,7 +63,8 @@ int numbers[4];
 
 
 
-int move(int r1,int r2,int c1, int c2,char A[rows][cols],int F[rows][cols],int *undo,int *redo, player *p1,player*p2){
+int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, player *p1,player*p2){
+
        int c,r,valid;
         char place;
         if(r1 <= n+1 && r2 <= n+1 && c1 <= m+1 && c2 <= m+1){
@@ -77,6 +77,7 @@ int move(int r1,int r2,int c1, int c2,char A[rows][cols],int F[rows][cols],int *
             else {
                 printf("\nEnter Valid input: ");
                 human_move(A,F,undo,redo,p1,p2);}
+
 
         if(valid==1){for(int k = count; k>=0; k--){
             redo[k] = 0;
@@ -108,13 +109,15 @@ int move(int r1,int r2,int c1, int c2,char A[rows][cols],int F[rows][cols],int *
             else human_move(A,F,undo,redo,p1,p2);
         }
 
+        printf("n = %d",n);sleep(2);
+
     return check_box(A,r1,r2,c1,c2,F,flag,p1,p2);
 }
 
 
 
 
-int computer_move(char A[rows][cols],int F[rows][cols],player *p1,player*p2){
+int computer_move(char **A,int **F,player *p1,player*p2){
 int i,j;
 
 for(i=0;i<rows;i++){
@@ -142,7 +145,7 @@ void printArray(int * arr, int size) {
     printf("% d -", arr[i]);
 }
 
-void Undo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,player *p2){
+void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2){
 
 
             int temp = undo[p1->moves + p2->moves -1];
@@ -190,7 +193,7 @@ return check_box_inv(A,r1,r2,c1,c2,F,flag,p1,p2);
 }
 
 
-void Redo(char A[rows][cols],int F[rows][cols],int * undo,int *redo, player *p1,player *p2){
+void Redo(char **A,int **F,int * undo,int *redo, player *p1,player *p2){
 
         int temp = redo[count-1];
         int temp2 = redo[count-1];

@@ -3,7 +3,7 @@ char read_el[30];
 char readz[30];
 
 
-void printintArray(int** arr) {
+void printintArray(int **arr) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             printf("%d ", arr[i][j]);
@@ -24,7 +24,7 @@ void printcharArray(char** arr) {
 
 
 
-void writeCharArray(const char *filename, char array[rows][cols]) {
+void writeCharArray(const char *filename, char **array) {
       if (file == NULL) {
         fprintf(stderr, "Error opening file %s\n", filename);
         return;
@@ -93,7 +93,7 @@ int readInt(const char *filename, int x) {
 
     if (file == NULL) {
         fprintf(stderr, "Error opening file %s\n", filename);
-        return;
+        return 0;
     }
     if (fscanf(file, " %d ", &x) == 1) {
         printf("Read integer: %d\n", x);
@@ -114,11 +114,10 @@ void loadGame(char *filename,player p1, player p2){
     m = readInt(filename,m);
     rows = rows_c*n+rows_c+1;
     cols = cols_c*m+cols_c+1;
-    printf("success\n");sleep(2);
+    printf("success\n");sleep(1);
     allocateArrays();
     flag = readInt(filename,flag);
-    mode = readInt(filename,mode);   printf("success");sleep(2);
-  // Adjust the buffer size as needed
+    mode = readInt(filename,mode);   printf("success");sleep(1);
 
  fgets(p1.name, sizeof(p1.name), file);
         printf("Read from file: %s", p1.name);
@@ -154,8 +153,16 @@ void loadGame(char *filename,player p1, player p2){
             }
         }
     }
-
     fclose(file);
+    /*char board[rows][cols];
+            for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+           board[i][j] = A[i][j];
+        }
+    */
+
+
+
     printintArray(flagARR);sleep(5);
     printcharArray(A);sleep(5);
 
@@ -163,14 +170,14 @@ void loadGame(char *filename,player p1, player p2){
     print_grid(A,flagARR);
     print_data(p1,p2,match_begun,n*m);
     clock_t match_begun = clock();
-     gameLoop();
+     gameLoop(A,flagARR);
     winnerCheck();
     Top10Save();
 
 }
 
 
-void save_Game(){
+int save_Game(){
     char filename[MAX_FILENAME_LENGTH];
     char userString[MAX_STRING_LENGTH];
     printf("Enter a string: \n");
@@ -189,7 +196,7 @@ void save_Game(){
         }
     } else {
         perror("Error reading input");
-        return 1;
+        return 0;
     }
     snprintf(filename, sizeof(filename), "%s.txt", userString);
 

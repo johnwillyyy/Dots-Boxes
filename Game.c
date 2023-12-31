@@ -11,7 +11,6 @@ double player_begun;// starting times for the game / player's turn
 int exitFlag = 0;   // Thread's exit flag
 int minutes;        // game time (minutes)
 int j =0;
-int x;
 int mode;
 char **A;           // Main Grid Array
 int **flagARR;      // Flag array
@@ -42,8 +41,10 @@ int main() {
     rows = rows_c*n+rows_c+1;
     cols = cols_c*m+cols_c+1;
     allocateArrays();
-    gameInit();
-    gameLoop();
+
+    gameInit(A,flagARR);
+
+    gameLoop(A,flagARR);
     winnerCheck();
     Top10Save();
 }

@@ -88,7 +88,7 @@ scanf("%d",&input);
     if(input == 1){
         mode_menu(pn,pm,pmode,p1,p2);
 }
-    else if (input == 2){ loadGame("lol.txt",p1, p2);}
+    else if (input == 2){loadGame("lol.txt",p1, p2);}
 
     else if (input == 3){
     printf("\n");

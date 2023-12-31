@@ -85,13 +85,13 @@ void updateTopScores(player topPlayers[MAX_PLAYERS], const char *winnerName, int
     }
 }
 
-void display(){
+int display(){
     FILE *file = fopen("top_scores.txt", "r");
 
     // Check if the file was opened successfully
     if (file == NULL) {
         perror("Error opening file");
-        return 1; // Return an error code
+        return 0; // Return an error code
     }
 
     // Read and print each character from the file

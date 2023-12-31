@@ -1,7 +1,7 @@
 void allocateArrays(){
-             A = (char **)malloc(rows * sizeof(char *));  // Allocate memory for rows
+             A = (char **)malloc(rows * sizeof(int *));  // Allocate memory for rows
     for (int i = 0; i < rows; i++) {
-        A[i] = (char *)malloc(cols * sizeof(char));  // Allocate memory for columns
+        A[i] = (char *)malloc(cols * sizeof(int));  // Allocate memory for columns
     }
 
  flagARR = (int **)malloc(rows * sizeof(int *));  // Allocate memory for rows
@@ -11,7 +11,7 @@ void allocateArrays(){
 }
 
 
-void gameLoop(){
+void gameLoop(char **A,int **flagARR){
  while(p1.score+p2.score < n*m){
 if(mode == 0 || (mode==1 && flag==0)){
 flag = human_move(A,flagARR,uARR,rARR,&p1,&p2);
@@ -60,7 +60,7 @@ void Top10Save() {
 }
 
 
-void gameInit() {
+void gameInit(char **A, int ** flagARR) {
 
         for(int i=0;i<rows;i++){
         for(int j=0;j<cols;j++){

@@ -1,5 +1,5 @@
 
-void create_grid(char A[rows][cols]){
+void create_grid(char** A){
     for(int i=0;i<rows;i++)
         for(int j=0;j<cols;j++){
             if(i==0&&j%cols_c==0&&j!=0)
@@ -15,7 +15,7 @@ void create_grid(char A[rows][cols]){
 
 
 
-void print_grid(char A[rows][cols],int F[rows][cols]){
+void print_grid(char **A,int **F){
     for (int i=0;i<rows;i++){
         printf("\n");
         printf("\t\t");
