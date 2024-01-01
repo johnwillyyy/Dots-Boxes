@@ -109,6 +109,7 @@ int readInt(const char *filename, int x) {
 
 
 int save_Game(){
+
     char filename[MAX_FILENAME_LENGTH];
     char userString[MAX_STRING_LENGTH];
     printf("Enter a string: \n");
@@ -116,7 +117,7 @@ int save_Game(){
 
     // Use fgets to read the entire line of input, including spaces
     //scanf("%c", (char *) stdin);
-
+if(savenum<3){
     if (fgets(userString, sizeof(userString), stdin) != NULL) {
         // Remove the newline character if present
             scanf("%c", (char *) stdin);
@@ -129,9 +130,37 @@ int save_Game(){
         perror("Error reading input");
         return 0;
     }
-    snprintf(filename, sizeof(filename), "%s.txt", userString);
+
+            char stringValue[20];
+                sprintf(stringValue, "%d", savenum);
+                char foldername[50];
+                sprintf(foldername, "%s", userString);
+
+                  int check = mkdir(foldername);
+
+    if (!check)
+        printf("Folder created\n");
+    else {
+        printf("Unable to create folder\n");
+    }
+
+    snprintf(filename, sizeof(filename), "%s/%s.txt", userString,stringValue);
+
+
+
+    // Construct folder name
+savenum++;
+
+ 
+
 
 writeGameData(filename,&p1, &p2);
+
+}
+else {
+    printf("You've reached maximum number of saves");
+    sleep(1);
+}
 
 }
 

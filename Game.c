@@ -16,6 +16,7 @@ char **A;           // Main Grid Array
 int **flagARR;      // Flag array
 int uARR[100]={0};
 int rARR[100]={0};
+int savenum = 3;
 
 #define MAX_PLAYERS 10
 #define max_name_length 20
