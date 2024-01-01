@@ -21,17 +21,17 @@ void print_grid(char **A,int **F){
         printf("\t\t");
         for (int j=0;j<cols;j++){
             if(j%cols_c==0){
-                if(F[i][j]==0)
+                if(F[i][j]==0||F[i][j]==-2)
                     printf(YEL "%c" RESET,A[i][j]);
-                else if(F[i][j]==1)
+                else if(F[i][j]==1||F[i][j]==-1)
                     printf(CYN "%c" RESET,A[i][j]);
                 else
                     printf(RESET "%c" RESET,A[i][j]);
             }
             else{
-                    if(F[i][j]==0)
+                    if(F[i][j]==0||F[i][j]==-2)
                         printf(YEL "%c%c%c" RESET,A[i][j],A[i][j],A[i][j]);
-                    else if(F[i][j]==1)
+                    else if(F[i][j]==1||F[i][j]==-1)
                         printf(CYN "%c%c%c" RESET,A[i][j],A[i][j],A[i][j]);
                     else
                         printf( "%c%c%c",A[i][j],A[i][j],A[i][j]);

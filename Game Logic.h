@@ -94,8 +94,7 @@ int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, play
             if(A[r1][c+1] != -51){
             A[r1][c+1]=-51;
             F[r1][c+1]=flag;
-            if (flag == 0)p1->moves++;
-            if (flag == 1)p2->moves++;}
+            }
             else human_move(A,F,undo,redo,p1,p2);
             break;
 
@@ -104,12 +103,9 @@ int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, play
             if(A[r+1][c1] != -70){
             A[r+1][c1]=-70;
             F[r+1][c1]=flag;
-            if (flag == 0)p1->moves++;
-            if (flag == 1)p2->moves++;}
+            }
             else human_move(A,F,undo,redo,p1,p2);
         }
-
-        printf("n = %d",n);sleep(2);
 
     return check_box(A,r1,r2,c1,c2,F,flag,p1,p2);
 }
