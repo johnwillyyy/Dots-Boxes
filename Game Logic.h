@@ -73,6 +73,11 @@ int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, play
             else if (r1==r2 && abs(c1-c2) == 1){place = '1'; store_move(r1,r2,c1,c2,undo,p1,p2);valid=1;}
 
             else if (c1==c2 && abs(r1-r2) == 1){place = '2'; store_move(r1,r2,c1,c2,undo,p1,p2);valid=1;}
+
+                        else {
+                printf("\nEnter Valid input: ");
+                human_move(A,F,undo,redo,p1,p2);}
+
         }
             else {
                 printf("\nEnter Valid input: ");
@@ -140,6 +145,7 @@ void printArray(int * arr, int size) {
   for (int i = 0; i < size; i++)
     printf("% d -", arr[i]);
 }
+
 
 void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2){
 

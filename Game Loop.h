@@ -71,21 +71,6 @@ void gameInit(char **A, int ** flagARR) {
             A[i][j]='0';}
             }
 
-                  for(int i=0;i<rows;i++){
-        for(int j=0;j<cols;j++){
-            printf("%d",flagARR[i][j]);
-            }
-            printf("\n");
-            }
-            sleep(1);
-
-    for(int i=0;i<rows;i++){
-        for(int j=0;j<cols;j++){
-            printf("%d",A[i][j]);
-            }
-            printf("\n");
-            }
-            sleep(1);
 
     system("cls");
     create_grid(A);

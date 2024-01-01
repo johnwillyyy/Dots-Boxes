@@ -43,7 +43,7 @@ void writeNames(const char *filename, player *p1, player *p2) {
     if (file == NULL) {
         fprintf(stderr, "Error opening file %s\n", filename);
         return;
-    }       fprintf(file,"TEST");
+    }
             fprintf(file, "%s", p1->name);
             fprintf(file,"\n");
             fprintf(file, "%s", p2->name);
@@ -107,6 +107,37 @@ int readInt(const char *filename, int x) {
 
 
 
+
+int save_Game(){
+    char filename[MAX_FILENAME_LENGTH];
+    char userString[MAX_STRING_LENGTH];
+    printf("Enter a string: \n");
+    // Prompt the user for a string
+
+    // Use fgets to read the entire line of input, including spaces
+    //scanf("%c", (char *) stdin);
+
+    if (fgets(userString, sizeof(userString), stdin) != NULL) {
+        // Remove the newline character if present
+            scanf("%c", (char *) stdin);
+
+        size_t length = strlen(userString);
+        if (length > 0 && userString[length - 1] == '\n') {
+            userString[length - 1] = '\0';
+        }
+    } else {
+        perror("Error reading input");
+        return 0;
+    }
+    snprintf(filename, sizeof(filename), "%s.txt", userString);
+
+writeGameData(filename,&p1, &p2);
+
+}
+
+
+
+
 void loadGame(char *filename,player p1, player p2){
 
     file = fopen(filename, "r");
@@ -154,13 +185,6 @@ void loadGame(char *filename,player p1, player p2){
         }
     }
     fclose(file);
-    /*char board[rows][cols];
-            for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-           board[i][j] = A[i][j];
-        }
-    */
-
 
 
     printintArray(flagARR);sleep(5);
@@ -175,33 +199,4 @@ void loadGame(char *filename,player p1, player p2){
     Top10Save();
 
 }
-
-
-int save_Game(){
-    char filename[MAX_FILENAME_LENGTH];
-    char userString[MAX_STRING_LENGTH];
-    printf("Enter a string: \n");
-    // Prompt the user for a string
-
-    // Use fgets to read the entire line of input, including spaces
-    //scanf("%c", (char *) stdin);
-
-    if (fgets(userString, sizeof(userString), stdin) != NULL) {
-        // Remove the newline character if present
-            scanf("%c", (char *) stdin);
-
-        size_t length = strlen(userString);
-        if (length > 0 && userString[length - 1] == '\n') {
-            userString[length - 1] = '\0';
-        }
-    } else {
-        perror("Error reading input");
-        return 0;
-    }
-    snprintf(filename, sizeof(filename), "%s.txt", userString);
-
-writeGameData(filename,&p1, &p2);
-
-}
-
 
