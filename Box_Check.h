@@ -51,8 +51,8 @@ int check_box(char **A,int r1,int r2,int c1,int c2,int **F,int flag,player *p1,p
 
     int chain;
     if (check>0) {      //if there is a box update players score and moves and check if there is a chain and make the player get another turn
-            if (flag ==0) {p1->score+=check;chain=check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);if(!chain)p1->moves++; return flag;}
-            else if (flag ==1) {p2->score+=check;chain=check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);if(!chain)p2->moves++;  return flag;}
+            if (flag ==0) {p1->score+=check;printf("mina");sleep(2);chain=check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);printf("kero");sleep(2);if(!chain)p1->moves++; return flag;}
+            else if (flag ==1) {p2->score+=check;printf("mina");sleep(2);chain=check_chain(A,F,r1,r2,c1,c2,p1,p2,right,left,up,down,0);printf("kero");sleep(2);if(!chain)p2->moves++;  return flag;}
     }
     else {
         movecount = 0;
@@ -102,7 +102,7 @@ void check_box_inv(char** A,int r1,int r2,int c1,int c2,int** F,int flag,player 
 
 
 void dfsmove(char **A,int **F,int r1,int r2,int c1,int c2,int right, int left, int up , int down,player *p1,player *p2/*int *undo*/){
-    int c,r;
+    int c,r;printf("mama");
     if(r1==r2)
         c= c1<c2 ? c1:c2;
     else if(c1==c2)
@@ -112,9 +112,9 @@ void dfsmove(char **A,int **F,int r1,int r2,int c1,int c2,int right, int left, i
         F[r+1][c1]=flag;
         A[r+1][c1+1]=178;           //fill the box
         F[r+1][c1+1]=flag;
-        border(r1-rows_c,c+1,F,flag); 
-        border(r1-1,c,F,flag);          //make border lines colour as the player colour
-        border(r1-1,c+cols_c,F,flag);
+        border(r,c1+1,F,flag);
+        border(r+rows_c,c1+1,F,flag);              //make border lines colour as the player colour
+        border(r+1,c1+cols_c,F,flag);
     }
     else if(left){
         A[r+1][c1]=-70;             //make a move
@@ -143,6 +143,7 @@ void dfsmove(char **A,int **F,int r1,int r2,int c1,int c2,int right, int left, i
         border(r1+1,c,F,flag);              //make border lines colour as the player colour
         border(r1+1,c+cols_c,F,flag);
     }
+    printf("john");
 
     if (flag ==0) {p1->score++; p1->moves++;}           //Update score and number of moves
     else if (flag ==1) {p2->score++; p2->moves++;}
