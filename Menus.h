@@ -19,9 +19,10 @@
 
 #define rows_c 2
 #define cols_c 2
+#define MAX 30
 
 typedef struct{
-char name[30];
+char name[MAX];
 int score;
 int moves;
 }player;
@@ -29,6 +30,7 @@ player p1;
 player p2;
 player topPlayers[MAX_PLAYERS];
 FILE *file;
+
 void Redo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
 void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
 int save_Game();
@@ -38,6 +40,31 @@ void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
 void Redo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
 int current_time(double begin);
 int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, player *p1,player*p2);
+
+void getstr(char name[MAX]){
+    char str[MAX]="";
+
+    do{*name=getchar();         //skip invalid inputs
+    }while(*name=='\n'||*name==' '||*name=='\t');
+
+    fgets(str,MAX,stdin);       //get the rest of string after checking the validity                 
+    size_t len = strlen(str)+1;     //get the length of the string
+    int i;
+    for(i=1;i<len;i++){           //concatunate the first char with the rest
+        name[i]=str[i-1];
+        if(name[i]=='\n')break;     //end at \n and replace it by \0
+    }
+    name[i]='\0';
+    if(len==MAX)while(getchar()!='\n');         //get the rest of entry if he exceed the max
+}
+
+void convertToLower(char *str) {
+    // Iterate through each character in the string
+    for (int i = 0; str[i] != '\0'; ++i) {
+        // Apply tolower() to convert each character to lowercase
+        str[i] = tolower(str[i]);
+    }
+}
 
 void grid_menu(int *pn,int *pm){
     system("cls");              //printing choices
@@ -79,29 +106,29 @@ void mode_menu(int *pn,int *pm,int *pmode,player *p1,player *p2){
         *pmode = 0;
         printf("Enter Player 1 name: ");
 
-        do{x=getchar();         //skip invalid inputs
-        }while(x=='\n'||x==' '||x=='\t');
-        gets(p1->name);         //get first player name
+        char name1[MAX];
+        getstr(name1);           //get first players name
+        strcpy(p1->name,name1);
 
         printf("Enter Player 2 name: ");
 
-        do{x=getchar();         //skip invalid inputs
-        }while(x=='\n'||x==' '||x=='\t');
-        gets(p2->name);     //get second player name
+        char name2[MAX];
+        getstr(name2);           //get second players name
+        strcpy(p2->name,name2);
 
         grid_menu(pn,pm);
         break;
     case 2:                     //Human vs. Computer
         *pmode = 1;
-       printf("Enter Player name: ");
+        printf("Enter Player name: ");
 
-       do{x=getchar();         //skip invalid inputs
-        }while(x=='\n'||x==' '||x=='\t');
-       gets(p1->name);  //get player name
+        char name[MAX];
+        getstr(name);           //get players name
+        strcpy(p1->name,name);
 
-       strcpy(p2->name, "Mina&John");
-       grid_menu(pn,pm);
-       break;
+        strcpy(p2->name, "Mina&John");
+        grid_menu(pn,pm);
+        break;
     }
 }
 
@@ -121,7 +148,7 @@ void main_menu(int *pn,int *pm, int *pmode, player *p1, player *p2){
 
     switch(input){
         case 1:mode_menu(pn,pm,pmode,p1,p2);break;  //New Game
-        case 2:loadGame("john.txt",p1, p2);break;    //Load Game
+        case 2:loadGame();break;    //Load Game
         case 3:printf("\n");display();sleep(5);system("cls");main_menu(pn,pm,pmode,p1,p2);break;   //Top 10 Players
         case 4:exit(0);     //Exit
     }

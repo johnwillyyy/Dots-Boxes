@@ -22,7 +22,7 @@ flag = computer_move(A,flagARR,&p1,&p2);
 
             system("cls");
             print_grid(A,flagARR);
-            print_data(p1,p2,match_begun,n*m);
+            print_data(&p1,&p2,match_begun,n*m);
        /*    printArray(uARR, 50);
             printf("\n");
             printArray(rARR, count);
@@ -75,7 +75,7 @@ void gameInit(char **A, int ** flagARR) {
     system("cls");
     create_grid(A);
     print_grid(A,flagARR);
-    print_data(p1,p2,match_begun,n*m);
+    print_data(&p1,&p2,match_begun,n*m);
     clock_t match_begun = clock();
 
 

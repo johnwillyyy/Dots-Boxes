@@ -9,14 +9,16 @@ int movecount =0;   // Number of moves since new turn
 double match_begun;
 double player_begun;// starting times for the game / player's turn
 int exitFlag = 0;   // Thread's exit flag
-int minutes;        // game time (minutes)
+int minutes;  
+int seconds;      // game time (minutes)
 int j =0;
 int mode;
 char **A;           // Main Grid Array
 int **flagARR;      // Flag array
 int uARR[100]={0};
 int rARR[100]={0};
-int savenum = 3;
+int savenum = 0;
+int *pn=&n ,*pm=&m ,*pmode=&mode;
 
 #define MAX_PLAYERS 10
 #define max_name_length 20
@@ -34,7 +36,6 @@ int savenum = 3;
 #include "save_Load.h"
 
 
-int *pn=&n ,*pm=&m ,*pmode=&mode;
 
 int main() {
     system("cls");

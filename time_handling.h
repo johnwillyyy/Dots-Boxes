@@ -5,6 +5,7 @@ int current_time(double begin){
     minutes = (int)(time_spent / 60) %60;
     time_spent = (int)time_spent%60;
     //printf("%0.0f:0%0.0f",minutes,time_spent);
+    seconds = time_spent;
     return time_spent;
 }
 
