@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <direct.h>
 //#include <pthread.h>
 
 #define RED   "\x1B[31m"
@@ -35,6 +36,8 @@ int display();
 int store_move(int r1,int r2,int c1,int c2,int *store,player *p1,player *p2);
 void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
 void Redo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
+int current_time(double begin);
+int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, player *p1,player*p2);
 
 void grid_menu(int *pn,int *pm){
     system("cls");              //printing choices
@@ -118,7 +121,7 @@ void main_menu(int *pn,int *pm, int *pmode, player *p1, player *p2){
 
     switch(input){
         case 1:mode_menu(pn,pm,pmode,p1,p2);break;  //New Game
-        case 2:loadGame("lol.txt",p1, p2);break;    //Load Game
+        case 2:loadGame("john.txt",p1, p2);break;    //Load Game
         case 3:printf("\n");display();sleep(5);system("cls");main_menu(pn,pm,pmode,p1,p2);break;   //Top 10 Players
         case 4:exit(0);     //Exit
     }
