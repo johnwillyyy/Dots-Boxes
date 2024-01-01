@@ -18,6 +18,18 @@ void printcharArray(char** arr) {                   //print character array to a
     }
 }
 
+void writeCharArray(const char *filename, char **array) {
+      if (file == NULL) {
+        fprintf(stderr, "Error opening file %s\n", filename);
+        return;
+    }
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            fprintf(file, "%d ", array[i][j]);
+        }
+        fprintf(file, "\n");
+    }
+}
 
 void writeNames(const char *filename, player *p1, player *p2) {     //write player names to file
     if (file == NULL) {
@@ -53,9 +65,14 @@ void writeGameData(char *filename,player *p1, player *p2){
     writeNames(filename, p1,p2);
     writeData(filename, p1,p2);
 
-    printintArray(filename, flagARR);
-    printcharArray(filename, A);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            fprintf(file, "%d ", flagARR[i][j]);
+        }
+        fprintf(file, "\n");
 
+    }
+    writeCharArray(filename, A);
     fclose(file);
 }
 
