@@ -36,8 +36,7 @@ void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
 int save_Game();
 int display();
 int store_move(int r1,int r2,int c1,int c2,int *store,player *p1,player *p2);
-void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
-void Redo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
+void loadGame();
 int current_time(double begin);
 int move(int r1,int r2,int c1, int c2,char **A,int **F,int *undo,int *redo, player *p1,player*p2);
 
