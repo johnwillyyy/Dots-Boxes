@@ -64,10 +64,11 @@ printf(BLU"Time: %d:%d",minutes,current_time(begin));
 
 printf("\t\t\t\tRemaining BOXES = %d\n"RESET,(boxes) - (p2->score+p1->score));
 
-printf("\t\t\t\t\t(Enter -1 -1 -1 -1 to exit game)\n");
+
 printf("\t\t\t\t\t(Enter 1 1 1 1 to save game)\n");
 printf("\t\t\t\t\t(Enter 2 2 2 2 to Undo)\n");
 printf("\t\t\t\t\t(Enter 3 3 3 3 to Redo)\n");
+printf("\t\t\t\t\t(Enter 4 4 4 4 to exit game)\n");
 if (flag == 0)printf(YEL "Player 1 Turn\nEnter your move:" RESET);
 else printf(CYN "Player 2 Turn\nEnter your move:" RESET);
 }

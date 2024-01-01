@@ -1,5 +1,5 @@
 void check_special_entries(int r1,int r2,int c1,int c2,char **A,int **F,player *p1,player *p2,int *undo,int *redo){
-if(r1==-1 && r2==-1 && c1==-1 && c2==-1)exit(0);
+if(r1==4 && r2==4 && c1==4 && c2==4)exit(0);
 else if(r1==1 && r2==1 && c1==1 && c2==1){
    save_Game();
    printf("\nGame Saved Successfully");
@@ -136,7 +136,7 @@ for(i=0;i<rows;i++){
 
 int store_move(int r1,int r2,int c1,int c2,int *store,player *p1,player *p2){
     int bank;
-    bank = flag+ 10*c2 + 100*c1 + 1000*r2 + 10000*r1;
+    bank =c2 + 10*c1 + 100*r2 + 1000*r1;
     store[(p1->moves)+(p2->moves)] = bank;
     return bank;
 }
@@ -150,21 +150,20 @@ void printArray(int * arr, int size) {
 void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2){
 
 
-            int temp = undo[p1->moves + p2->moves -1];
-            int temp2 = undo[p1->moves + p2->moves -1];
-            undo[p1->moves + p2->moves -1] = 0;
+    int temp = undo[p1->moves + p2->moves -1];
+    int temp2 = undo[p1->moves + p2->moves -1];
+    undo[p1->moves + p2->moves -1] = 0;
 
 
-        if(movecount == 0 && redo[0] == 0){flag^=1;}
-        int rem = temp%10; int current  = rem; temp/=10;
-        rem = temp%10; int c2 = rem; temp/=10;
-        rem = temp%10; int c1 = rem; temp/=10;
-        rem = temp%10; int r2 = rem; temp/=10;
-        rem = temp; int r1 = rem;
-        if((movecount == 0 && redo[0] != 0) || movecount <0 || temp2 == 0){
-                printf("\nYOUCANTUNDO\nEnter move: ");
-                flag = human_move(A,F,undo,redo,p1,p2);
-                }
+    if(movecount == 0 && redo[0] == 0){flag^=1;}
+    int rem = temp%10; int c2 = rem; temp/=10;
+    rem = temp%10; int c1 = rem; temp/=10;
+    rem = temp%10; int r2 = rem; temp/=10;
+    rem = temp; int r1 = rem;
+    if((movecount == 0 && redo[0] != 0) || movecount <0 || temp2 == 0){
+            printf("\nYOUCANTUNDO\nEnter move: ");
+            flag = human_move(A,F,undo,redo,p1,p2);
+    }
 
 
 
@@ -175,12 +174,12 @@ void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2){
         c2=cols_c*c2;
          if (flag == 0) p1->moves--;
          else if (flag == 1) p2->moves--;
-if(r1==r2){
+    if(r1==r2){
           int  c = c1<c2 ? c1:c2;
             A[r1][c+1]=' ';
             F[r1][c+1]=2;
             }
-if(c1==c2){
+    if(c1==c2){
          int   r = r1<r2?r1:r2;
             A[r+1][c1]=' ';
             F[r+1][c1]=2;}

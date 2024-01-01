@@ -23,13 +23,13 @@ flag = computer_move(A,flagARR,&p1,&p2);
             system("cls");
             print_grid(A,flagARR);
             print_data(&p1,&p2,match_begun,n*m);
-       /*    printArray(uARR, 50);
+            printArray(uARR, 50);
             printf("\n");
             printArray(rARR, count);
             printf("\n");
             printf("Count = %d | ",count);
             printf("MOVECOUNT = %d | ", movecount);
-            printf("FLAG = %d\n", flag);  */
+            printf("FLAG = %d\n", flag);
     }
 }
 
