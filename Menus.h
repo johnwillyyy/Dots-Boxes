@@ -5,6 +5,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 //#include <pthread.h>
 
 #define RED   "\x1B[31m"
@@ -27,7 +28,13 @@ player p1;
 player p2;
 player topPlayers[MAX_PLAYERS];
 FILE *file;
-
+void Redo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
+void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
+int save_Game();
+int display();
+int store_move(int r1,int r2,int c1,int c2,int *store,player *p1,player *p2);
+void Undo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
+void Redo(char **A,int **F,int * undo,int *redo, player *p1,player *p2);
 
 void grid_menu(int *pn,int *pm){
     system("cls");              //printing choices
